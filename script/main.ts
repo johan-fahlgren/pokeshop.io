@@ -1,5 +1,5 @@
 /* POKEAPI URL SETUP */
-const pokeUrl = new URL("https://pokeapi.co");
+const pokeUrl:any = new URL("https://pokeapi.co");
 pokeUrl.pathname = "/api/v2/";
 pokeUrl.searchParams.set("pokemon", 1118);
 
