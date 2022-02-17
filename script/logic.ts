@@ -1,6 +1,22 @@
-"use strict";
 
-const typeColor = {
+export class pokeHandler{
+
+    pokemonObj:any[];
+    pokeUrl:URL;
+
+    constructor(){
+    this.pokemonObj  = [];
+
+        /* POKEMON-API URL SETUP */
+    this.pokeUrl = new URL("https://pokeapi.co");
+    this.pokeUrl.pathname = "/api/v2/pokemon";
+    this.pokeUrl.searchParams.set("limit", "12");
+
+    }
+
+
+
+/* const typeColor = {
     bug: "#26de81",
     dragon: "#ffeaa7",
     electric: "#fed330",
@@ -18,26 +34,21 @@ const typeColor = {
     rock: "#2d3436",
     water: "#0190FF",
     Steel: "#b8b8d0" ,
-    Dark: "#705848";
-  };
-
-
-/* POKEAPI URL SETUP */
-const pokeUrl:any = new URL("https://pokeapi.co");
-pokeUrl.pathname = "/api/v2/pokemon";
-pokeUrl.searchParams.set("limit", 12);
+    Dark: "#705848"
+  }; */
 
 
 
-export function onPageLoad () {
+
+async onPageLoad () {
     
-fetchPokemonURL(pokeUrl);
+await this.fetchPokemonURL(this.pokeUrl.href);
 
 }
 
 
-function fetchPokemonURL (pokeUrl) {    
-fetch(pokeUrl)
+async fetchPokemonURL (pokeUrl:string) {    
+await fetch(pokeUrl)
 .then((response) => {
 if(response.ok)
 {
@@ -52,45 +63,39 @@ else
 .then((urlData) => {       
     const getNextPage:string = urlData.next; 
     const getPreviousPage:string = urlData.previous;
-    const pokemonList:object[] = urlData.results;         
+    const pokemonList:any[] = urlData.results;         
     //paginationData(getNextPage, getPreviousPage);
-    getPokemonData(pokemonList);
+    this.getPokemonData(pokemonList);
 })
 .catch((err) => console.log(err));
 }  
 
 
 
-function getPokemonData(pokemonList){
-
-    const pokemonsObj = [];
+async getPokemonData(pokemonList:any[]){
+    //console.log(pokemonObj);
 
     for(let pokemon of pokemonList){        
-        fetch(pokemon.url)
+        let pokemonData = await fetch(pokemon.url)
         .then((response) => {        
-            return response.json();})
-        .then((pokemonData) => {         
+            return response.json();});
 
-            const pokemon = {
-            id: pokemonData.id,
-            name: pokemonData.name,
-            height: pokemonData.height,
-            weight: pokemonData.weight,
-            sprite: pokemonData.sprites.front_default,
-            abilities: pokemonData.abilities,
-            type: pokemonData.types[0].type.name 
-            };   
-               
-            pokemonsObj.push(pokemon);
+            const newPokemon = {
+                id: pokemonData.id,
+                name: pokemonData.name,
+                height: pokemonData.height,
+                weight: pokemonData.weight,
+                sprite: pokemonData.sprites.front_default,
+                abilities: pokemonData.abilities,
+                type: pokemonData.types[0].type.name 
 
-        }) 
-
-    }
-    return pokemonsObj;   
+    } 
+    this.pokemonObj.push(newPokemon);
+ }
 
 }
 
-function paginationData(getNextPage, getPreviousPage){
+paginationData(getNextPage:string, getPreviousPage:string){
 
     //console.log(getNextPage);
     //console.log(getPreviousPage);
@@ -98,3 +103,5 @@ function paginationData(getNextPage, getPreviousPage){
     throw new Error("function not implemented");
     return undefined;
 };
+
+}
