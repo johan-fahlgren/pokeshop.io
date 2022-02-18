@@ -1,1 +1,66 @@
-/* No CSS *//*# sourceMappingURL=style.css.map */
+* {
+  border: 2px solid black;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+}
+
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Products {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-grid-columns: (auto)[3];
+      grid-template-columns: repeat(3, auto);
+}
+
+.cardContainer {
+  padding: 10px;
+}
+
+.card {
+  width: 200px;
+  height: 300px;
+}
+
+.cardHeader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.cardImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: red;
+}
+
+.cardImage img {
+  width: 150px;
+  border-radius: 50%;
+  margin: 20px 0px;
+  background-color: white;
+}
+/*# sourceMappingURL=style.css.map */

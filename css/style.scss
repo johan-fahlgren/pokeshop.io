@@ -1,0 +1,43 @@
+* {
+  border: 2px solid black;
+}
+body {
+  max-width: 800px;
+  margin: auto;
+}
+main {
+  display: flex;
+  justify-content: center;
+}
+.Products {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, auto);
+  //width: 600px;
+}
+
+.cardContainer {
+  padding: 10px;
+}
+.card {
+  width: 200px;
+  height: 300px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.cardImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+
+  & img {
+    width: 150px;
+    border-radius: 50%;
+    margin: 20px 0px;
+    background-color: white;
+  }
+}

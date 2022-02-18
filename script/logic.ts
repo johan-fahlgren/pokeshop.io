@@ -2,21 +2,10 @@ export class pokeHandler {
   pokemonObj: any[];
   pokeUrl: URL;
 
-  getNextPage: string;
-  getPreviousPage: string;
+  getNextPage: string="";
+  getPreviousPage: string="";
 
-  constructor() {
-    this.pokemonObj = [];
-
-
-
-    /* POKEMON-API URL SETUP */
-    this.pokeUrl = new URL("https://pokeapi.co");
-    this.pokeUrl.pathname = "/api/v2/pokemon";
-    this.pokeUrl.searchParams.set("limit", "12");
-  }
-
-  /* const typeColor = {
+  typeColor = {
     bug: "#26de81",
     dragon: "#ffeaa7",
     electric: "#fed330",
@@ -33,10 +22,23 @@ export class pokeHandler {
     psychic: "#a29bfe",
     rock: "#2d3436",
     water: "#0190FF",
-    Steel: "#b8b8d0" ,
-    Dark: "#705848"
-  }; */
+    steel: "#b8b8d0" ,
+    dark: "#705848"
+  };
 
+  constructor() {
+    this.pokemonObj = [];
+
+
+
+    /* POKEMON-API URL SETUP */
+    this.pokeUrl = new URL("https://pokeapi.co");
+    this.pokeUrl.pathname = "/api/v2/pokemon";
+    this.pokeUrl.searchParams.set("limit", "12");
+
+  }
+
+  
   async onPageLoad() {
     await this.fetchPokemonURL(this.pokeUrl.href);
   }
@@ -79,10 +81,4 @@ export class pokeHandler {
     }
   }
  
-  paginationData() {
-    console.log(this.getNextPage);
-    console.log(this.getPreviousPage);
-
-    throw new Error("function not implemented");    
-  }
 }
