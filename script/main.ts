@@ -4,14 +4,21 @@ import "./util.js";
 const pHandler = new pokeHandler();
 printPokemonCards(pHandler.pokeUrl.href);
 
+window.addEventListener("DOMContentLoaded", event => {
+  const audio = document.querySelector("audio");
+  audio.volume = 0.1;
+  audio.play();
+  audio.loop = true;
+});
+
+
 
 //TODO - Fix missing abilities. 
 async function printPokemonCards(url: any) {
   await pHandler.fetchPokemonURL(url);
   const productsContainer = document.getElementById("Products");
 
-  for (let pokemon of pHandler.pokemonObj) {
-    console.log(pokemon);
+  for (let pokemon of pHandler.pokemonObj) {   
     const themeColor = pHandler.typeColor[pokemon.type];
     const productCard = document.createElement("div");
     productCard.className="cardContainer";
