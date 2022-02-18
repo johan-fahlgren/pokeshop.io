@@ -2,12 +2,15 @@ import { pokeHandler } from "./logic.js";
 import "./util.js";
 
 const pHandler = new pokeHandler();
+const pagination:HTMLElement | any =document.getElementById("pagination");
+const productsContainer:HTMLElement | any = document.getElementById("Products");
+
 printPokemonCards(pHandler.pokeUrl.href);
 
 window.addEventListener("DOMContentLoaded", event => {
-  const audio = document.querySelector("audio");
+  const audio:any = document.querySelector("audio");
   audio.volume = 0.1;
-  audio.play();
+  //audio.play();
   audio.loop = true;
 });
 
@@ -15,10 +18,15 @@ window.addEventListener("DOMContentLoaded", event => {
 
 //TODO - Fix missing abilities. 
 async function printPokemonCards(url: any) {
+  
+  
+  pHandler.pokemonObj=[];
+  productsContainer.innerHTML="";
+  pagination.innerHTML="";
   await pHandler.fetchPokemonURL(url);
-  const productsContainer = document.getElementById("Products");
 
-  for (let pokemon of pHandler.pokemonObj) {   
+  for (let pokemon of pHandler.pokemonObj) { 
+    
     const themeColor = pHandler.typeColor[pokemon.type];
     const productCard = document.createElement("div");
     productCard.className="cardContainer";
@@ -54,7 +62,29 @@ async function printPokemonCards(url: any) {
     productsContainer?.append(productCard);
   }
 
-  /* ONCLICK */
-  // fwd_btn.onClick = () => {
-  // printPokemonCards(pHandler.getNextPage)};
+
+
+const btnNext=document.createElement("button");
+btnNext.id="next_btn";
+btnNext.innerText="Next";
+btnNext.onclick = () =>{
+    if(pHandler.getNextPage!==null){
+        printPokemonCards(pHandler.getNextPage);
+        
+    }
+}
+
+
+const btnPrevious=document.createElement("button");
+btnPrevious.id="prev_btn";
+btnPrevious.innerText="Previous";
+btnPrevious.onclick=()=>{
+    if(pHandler.getPreviousPage!==null){
+    printPokemonCards(pHandler.getPreviousPage);}
+}
+
+pagination?.append(btnPrevious);
+pagination?.append(btnNext);
+
+
 }

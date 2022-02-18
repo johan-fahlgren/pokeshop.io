@@ -123,4 +123,21 @@ main {
   background-color: gold;
   border: 2px solid black;
 }
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pagination button {
+  margin: 10px;
+  padding: 5px;
+  width: 100px;
+  font-size: larger;
+  font-weight: bold;
+}
 /*# sourceMappingURL=style.css.map */

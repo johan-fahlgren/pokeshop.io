@@ -100,3 +100,15 @@ main {
     border: 2px solid black;
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  & button {
+    margin: 10px;
+    padding: 5px;
+    width: 100px;
+    font-size: larger;
+    font-weight: bold;
+  }
+}
