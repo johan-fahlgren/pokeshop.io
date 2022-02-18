@@ -2,10 +2,10 @@ export class pokeHandler {
   pokemonObj: any[];
   pokeUrl: URL;
 
-  getNextPage: string="";
-  getPreviousPage: string="";
+  getNextPage: string = "";
+  getPreviousPage: string = "";
 
-  typeColor = {
+  typeColor:any = {
     bug: "#26de81",
     dragon: "#ffeaa7",
     electric: "#fed330",
@@ -22,42 +22,37 @@ export class pokeHandler {
     psychic: "#a29bfe",
     rock: "#2d3436",
     water: "#0190FF",
-    steel: "#b8b8d0" ,
-    dark: "#705848"
+    steel: "#b8b8d0",
+    dark: "#705848",
   };
+
 
   constructor() {
     this.pokemonObj = [];
-
-
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
     this.pokeUrl.pathname = "/api/v2/pokemon";
     this.pokeUrl.searchParams.set("limit", "12");
-
   }
 
-  
   async onPageLoad() {
     await this.fetchPokemonURL(this.pokeUrl.href);
   }
 
   async fetchPokemonURL(pokeUrl: string) {
-    let urlData = await fetch(pokeUrl)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw "Something went wrong, status: " + response.status;
-        }
-      });
-      
+    let urlData = await fetch(pokeUrl).then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw "Something went wrong, status: " + response.status;
+      }
+    });
+
     this.getNextPage = urlData.next;
     this.getPreviousPage = urlData.previous;
-    const pokemonList: any[] = urlData.results;    
-    return this.getPokemonData(pokemonList);   
-      
+    const pokemonList: any[] = urlData.results;
+    return this.getPokemonData(pokemonList);
   }
 
   async getPokemonData(pokemonList: any[]) {
@@ -80,5 +75,7 @@ export class pokeHandler {
       this.pokemonObj.push(newPokemon);
     }
   }
- 
+
+  
+    
 }
