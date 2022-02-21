@@ -1,5 +1,6 @@
 export class pokeHandler {
   pokemonObj: any[];
+  flavorTexts:any[];
   pokeUrl: URL;
 
   getNextPage: string = "";
@@ -29,6 +30,7 @@ export class pokeHandler {
 
   constructor() {
     this.pokemonObj = [];
+    this.flavorTexts=[];
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
@@ -73,11 +75,32 @@ export class pokeHandler {
         sprite: pokemonData.sprites.front_default,
         abilities: pokemonData.abilities,
         type: pokemonData.types[0].type.name,
+        speciesUrl: pokemonData.species.url,
       };
       this.pokemonObj.push(newPokemon);
     }
   }
 
-  
+  async fetchSpeciesData(speciesUrl:any){
     
+    let speciesData = await fetch(speciesUrl).then((response) => {
+      if (response.ok) {
+        return response.json();
+       
+      } else {
+        throw "Something went wrong, status: " + response.status;
+      }
+    });
+
+    await speciesData.flavor_text_entries.every((entry:any)=>{
+      
+      if(entry.language.name=="en"){
+        
+        this.flavorTexts.push(entry.flavor_text);
+      }
+      //console.log(this.flavorTexts.shift());
+    })
+  }
+    
+
 }

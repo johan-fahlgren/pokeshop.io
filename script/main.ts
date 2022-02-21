@@ -5,6 +5,7 @@ const pHandler = new pokeHandler();
 const pagination:HTMLElement | any =document.getElementById("pagination");
 const productsContainer:HTMLElement | any = document.getElementById("Products");
 
+
 printPokemonCards(pHandler.pokeUrl.href);
 
 window.addEventListener("DOMContentLoaded", event => {
@@ -53,18 +54,27 @@ async function printPokemonCards(url: any) {
     <div class="price"><b>199 SEK</b></div>
     </div>    
     <div class="cardButtons">
-    <button>More info</button>
+    <button id="info_btn">More info</button>
     <button>Add to cart</button>
     </div>
     </div>`;
 
-
     productsContainer?.append(productCard);
+
+    document.getElementById("info_btn").onclick=()=>{
+      printModal(pokemon.speciesUrl);
+}
     
   }
   printPagination(url);
 }
 
+async function printModal(speciesUrl:any){
+    pHandler.flavorTexts=[];
+    await pHandler.fetchSpeciesData(speciesUrl);
+    console.log(pHandler.flavorTexts[0]);
+
+}
 
 function printPagination (url:any){
 
