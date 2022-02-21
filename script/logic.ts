@@ -50,9 +50,9 @@ export class pokeHandler {
     });
 
     this.getNextPage = urlData.next;
-    console.log(this.getNextPage);
+    //console.log(this.getNextPage);
     this.getPreviousPage = urlData.previous;
-    console.log(this.getPreviousPage);
+    //console.log(this.getPreviousPage);
     const pokemonList: any[] = urlData.results;
     return this.getPokemonData(pokemonList);
   }

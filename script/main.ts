@@ -60,31 +60,53 @@ async function printPokemonCards(url: any) {
 
 
     productsContainer?.append(productCard);
+    
+  }
+  printPagination(url);
+}
+
+
+function printPagination (url:any){
+
+const startPosition=41;
+const endPosition=url.search("&");
+let pageNumber=0;
+if(endPosition!==-1){
+pageNumber=(url.slice(startPosition, endPosition)/12);}
+else{
+  console.warn("endPosition not found, but don't worry!");
+}
+  const btnNext=document.createElement("button");
+  btnNext.id="next_btn";
+  btnNext.innerText="Next";
+  btnNext.addEventListener("click", () =>{
+      if(pHandler.getNextPage!==null){
+          printPokemonCards(pHandler.getNextPage);
+          
+      }
+  });
+  if(pHandler.getNextPage!==null){
+    btnNext.setAttribute("class", "btnActive");
   }
 
-
-
-const btnNext=document.createElement("button");
-btnNext.id="next_btn";
-btnNext.innerText="Next";
-btnNext.onclick = () =>{
-    if(pHandler.getNextPage!==null){
-        printPokemonCards(pHandler.getNextPage);
-        
+  const btnCurrent=document.createElement("button");
+  btnCurrent.innerText= `${pageNumber + 1}`;
+  btnCurrent.className="btnCurrent";
+  
+  const btnPrevious=document.createElement("button");
+  btnPrevious.id="prev_btn";
+  btnPrevious.innerText="Previous";
+  btnPrevious.onclick=()=>{
+      if(pHandler.getPreviousPage!==null){
+      printPokemonCards(pHandler.getPreviousPage);
     }
-}
-
-
-const btnPrevious=document.createElement("button");
-btnPrevious.id="prev_btn";
-btnPrevious.innerText="Previous";
-btnPrevious.onclick=()=>{
-    if(pHandler.getPreviousPage!==null){
-    printPokemonCards(pHandler.getPreviousPage);}
-}
-
-pagination?.append(btnPrevious);
-pagination?.append(btnNext);
-
-
-}
+  }
+  
+  if(pHandler.getPreviousPage!==null){
+    btnPrevious.setAttribute("class", "btnActive");
+  }
+  
+  pagination?.append(btnPrevious);
+  pagination?.append(btnCurrent);
+  pagination?.append(btnNext);
+  }

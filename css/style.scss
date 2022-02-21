@@ -107,8 +107,26 @@ main {
   & button {
     margin: 10px;
     padding: 5px;
-    width: 100px;
+    width: 120px;
     font-size: larger;
+    border-radius: 5px;
+    border: 3px solid gold;
+    background-color: #fff27c;
+  }
+}
+.btnActive {
+  &:hover {
+    background-color: gold;
     font-weight: bold;
   }
+}
+.btnCurrent {
+  min-width: 50px;
+  max-width: 70px;
+  margin: 10px;
+  padding: 5px;
+  font-size: larger;
+  border-radius: 5px;
+  background-color: gold;
+  font-weight: bold;
 }
