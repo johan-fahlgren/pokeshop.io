@@ -158,4 +158,60 @@ main {
   background-color: gold;
   font-weight: bold;
 }
+
+.modalBackground {
+  position: fixed;
+  width: 600px;
+  top: 50%;
+  left: 50%;
+  margin-left: -300px;
+  /* Negative half of width. */
+  margin-top: -200px;
+  /* Negative half of height. */
+}
+
+.modalDiv {
+  z-index: 1;
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 15px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 500px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  margin-left: -250px;
+  /* Negative half of width. */
+  margin-top: -150px;
+  /* Negative half of height. */
+}
+
+.modalHeading {
+  max-width: 200px;
+  font-size: 25px;
+  font-weight: bold;
+  color: red;
+  margin: 20px 0px;
+}
+
+.modalText {
+  max-width: 200px;
+}
+
+.modalImg {
+  width: 200px;
+}
+
+.modalOpen {
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+}
 /*# sourceMappingURL=style.css.map */

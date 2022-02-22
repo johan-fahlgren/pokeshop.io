@@ -5,6 +5,8 @@ const pHandler = new pokeHandler();
 const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
   document.getElementById("Products");
+const modalContainer: HTMLElement | any =
+  document.getElementById("Modal");
 
 printPokemonCards(pHandler.pokeUrl.href);
 
@@ -72,15 +74,48 @@ async function printPokemonCards(url: any) {
 
   allInfoButtons.forEach((infoBtn, index) => {
     infoBtn.addEventListener("click", () => {
-      printModal(pHandler.speciesUrls[index]);
+      
+      productsContainer.classList.add("modalOpen");
+      printModal(pHandler.speciesUrls[index], pHandler.pokemonObj[index].sprite);
     });
   });
 }
 
-async function printModal(speciesUrl: any) {
+async function printModal(speciesUrl: any, image:string) {
   pHandler.flavorTexts = [];
+  console.log(speciesUrl);
   await pHandler.fetchSpeciesData(speciesUrl);
-  console.log(pHandler.flavorTexts.slice(0, 3));
+  
+  const modalBackgroundImage=document.createElement("img");
+  modalBackgroundImage.className="modalBackground";
+  modalBackgroundImage.src="../images/pokedex.png"
+  
+  const modalDiv=document.createElement("div");
+  modalDiv.className="modalDiv";
+
+  const modalImgDiv=document.createElement("img");
+  modalImgDiv.className="modalImg";
+  modalImgDiv.src=image;
+
+  const modalTextContainer=document.createElement("div");
+  modalTextContainer.className="modalTextContainer";
+
+  const modalHeadingDiv=document.createElement("div");
+  modalHeadingDiv.className="modalHeading";
+  modalHeadingDiv.innerText=pHandler.pokemonName.toUpperCase(); 
+
+  const modalTextDiv=document.createElement("div");
+  modalTextDiv.className="modalText";
+  modalTextDiv.innerText=pHandler.flavorTexts[0]; //bytte från flavorTexts[.slice(0,3)]
+
+  
+
+  
+  modalContainer.append(modalBackgroundImage, modalDiv);
+  modalDiv.append(modalImgDiv, modalTextContainer);
+  modalTextContainer.append(modalHeadingDiv, modalTextDiv);
+  
+
 }
 
 function printPagination(url: any) {

@@ -3,6 +3,7 @@ export class pokeHandler {
   speciesUrls: any[];
   flavorTexts: any[];
   pokeUrl: URL;
+  pokemonName:string;
 
   getNextPage: string = "";
   getPreviousPage: string = "";
@@ -32,6 +33,7 @@ export class pokeHandler {
     this.pokemonObj = [];
     this.flavorTexts = [];
     this.speciesUrls = [];
+    this.pokemonName="";
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
@@ -92,5 +94,7 @@ export class pokeHandler {
         this.flavorTexts.push(entry.flavor_text);
       }
     });
+
+    this.pokemonName=speciesData.name;
   }
 }
