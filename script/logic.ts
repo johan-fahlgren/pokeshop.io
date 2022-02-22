@@ -1,12 +1,13 @@
 export class pokeHandler {
   pokemonObj: any[];
-  flavorTexts:any[];
+  speciesUrls: any[];
+  flavorTexts: any[];
   pokeUrl: URL;
 
   getNextPage: string = "";
   getPreviousPage: string = "";
 
-  typeColor:any = {
+  typeColor: any = {
     bug: "#26de81",
     dragon: "#ffeaa7",
     electric: "#fed330",
@@ -27,19 +28,15 @@ export class pokeHandler {
     dark: "#705848",
   };
 
-
   constructor() {
     this.pokemonObj = [];
-    this.flavorTexts=[];
+    this.flavorTexts = [];
+    this.speciesUrls = [];
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
     this.pokeUrl.pathname = "/api/v2/pokemon";
     this.pokeUrl.searchParams.set("limit", "12");
-  }
-
-  async onPageLoad() {
-    await this.fetchPokemonURL(this.pokeUrl.href);
   }
 
   async fetchPokemonURL(pokeUrl: string) {
@@ -52,9 +49,9 @@ export class pokeHandler {
     });
 
     this.getNextPage = urlData.next;
-    //console.log(this.getNextPage);
+
     this.getPreviousPage = urlData.previous;
-    //console.log(this.getPreviousPage);
+
     const pokemonList: any[] = urlData.results;
     return this.getPokemonData(pokemonList);
   }
@@ -81,26 +78,19 @@ export class pokeHandler {
     }
   }
 
-  async fetchSpeciesData(speciesUrl:any){
-    
+  async fetchSpeciesData(speciesUrl: any) {
     let speciesData = await fetch(speciesUrl).then((response) => {
       if (response.ok) {
         return response.json();
-       
       } else {
         throw "Something went wrong, status: " + response.status;
       }
     });
 
-    await speciesData.flavor_text_entries.every((entry:any)=>{
-      
-      if(entry.language.name=="en"){
-        
+    speciesData.flavor_text_entries.forEach((entry: any) => {
+      if (entry.language.name == "en") {
         this.flavorTexts.push(entry.flavor_text);
       }
-      //console.log(this.flavorTexts.shift());
-    })
+    });
   }
-    
-
 }
