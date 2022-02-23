@@ -3,7 +3,6 @@ export class pokeHandler {
   speciesUrls: any[];
   flavorTexts: any[];
   pokeUrl: URL;
-  pokemonName:string;
 
   getNextPage: string = "";
   getPreviousPage: string = "";
@@ -33,7 +32,6 @@ export class pokeHandler {
     this.pokemonObj = [];
     this.flavorTexts = [];
     this.speciesUrls = [];
-    this.pokemonName="";
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
@@ -65,13 +63,12 @@ export class pokeHandler {
       let pokemonData = await fetch(pokemon.url).then((response) => {
         return response.json();
       });
-
       const newPokemon = {
         id: pokemonData.id,
         name: pokemonData.name,
         height: pokemonData.height,
         weight: pokemonData.weight,
-        sprite: pokemonData.sprites.front_default,
+        sprite: pokemonData.sprites.other["official-artwork"].front_default,
         abilities: pokemonData.abilities,
         type: pokemonData.types[0].type.name,
         speciesUrl: pokemonData.species.url,
@@ -89,12 +86,11 @@ export class pokeHandler {
       }
     });
 
+    //TODO - Spara bara tre entrys
     speciesData.flavor_text_entries.forEach((entry: any) => {
       if (entry.language.name == "en") {
         this.flavorTexts.push(entry.flavor_text);
       }
     });
-
-    this.pokemonName=speciesData.name;
   }
 }

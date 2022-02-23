@@ -100,11 +100,25 @@ main {
   margin-bottom: 10px;
 }
 
+.cardImage .circle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: white;
+}
+
 .cardImage img {
   width: 180px;
-  border-radius: 50%;
-  margin: 10px 0px;
-  background-color: white;
 }
 
 .cardButtons {
@@ -159,6 +173,13 @@ main {
   font-weight: bold;
 }
 
+.Modal {
+  position: fixed;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+}
+
 .modalBackground {
   position: fixed;
   width: 600px;
@@ -167,6 +188,19 @@ main {
   margin-left: -300px;
   /* Negative half of width. */
   margin-top: -200px;
+  /* Negative half of height. */
+}
+
+.close_btn {
+  position: fixed;
+  font-size: 40px;
+  font-weight: bolder;
+  color: #fb0505;
+  top: 50%;
+  left: 50%;
+  margin-left: -270px;
+  /* Negative half of width. */
+  margin-top: -190px;
   /* Negative half of height. */
 }
 
@@ -198,7 +232,7 @@ main {
   max-width: 200px;
   font-size: 25px;
   font-weight: bold;
-  color: red;
+  color: #fb0505;
   margin: 20px 0px;
 }
 

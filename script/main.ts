@@ -5,8 +5,7 @@ const pHandler = new pokeHandler();
 const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
   document.getElementById("Products");
-const modalContainer: HTMLElement | any =
-  document.getElementById("Modal");
+const modalContainer: HTMLElement | any = document.getElementById("Modal");
 
 printPokemonCards(pHandler.pokeUrl.href);
 
@@ -37,7 +36,7 @@ async function printPokemonCards(url: any) {
           <span>#${pokemon.id}</span>
         </div>
         <div class="cardImage" style="background-color: ${themeColor}">
-          <img src="${pokemon.sprite}" />
+          <div class="circle"><img src="${pokemon.sprite}" /></div>
         </div>
 
         <div class="cardBody">
@@ -69,53 +68,73 @@ async function printPokemonCards(url: any) {
   });
 
   printPagination(url);
+  AddEventInfoButton();
+}
 
+function AddEventInfoButton() {
   const allInfoButtons = document.querySelectorAll(".info_btn");
 
   allInfoButtons.forEach((infoBtn, index) => {
     infoBtn.addEventListener("click", () => {
-      
-      productsContainer.classList.add("modalOpen");
-      printModal(pHandler.speciesUrls[index], pHandler.pokemonObj[index].sprite);
+      modalContainer.style.display = "block";
+      printModal(
+        pHandler.speciesUrls[index],
+        pHandler.pokemonObj[index].sprite,
+        pHandler.pokemonObj[index].name
+      );
     });
   });
 }
 
-async function printModal(speciesUrl: any, image:string) {
+async function printModal(speciesUrl: any, image: string, name: string) {
+  productsContainer.classList.add("modalOpen");
+  AddEventInfoButton();
+
   pHandler.flavorTexts = [];
   console.log(speciesUrl);
   await pHandler.fetchSpeciesData(speciesUrl);
-  
-  const modalBackgroundImage=document.createElement("img");
-  modalBackgroundImage.className="modalBackground";
-  modalBackgroundImage.src="../images/pokedex.png"
-  
-  const modalDiv=document.createElement("div");
-  modalDiv.className="modalDiv";
 
-  const modalImgDiv=document.createElement("img");
-  modalImgDiv.className="modalImg";
-  modalImgDiv.src=image;
+  const closeDiv = document.createElement("div");
+  closeDiv.className = "close_btn";
+  closeDiv.textContent = "X";
+  closeDiv.addEventListener("click", () => {
+    modalContainer.style.display = "none";
+    productsContainer.classList.remove("modalOpen");
+    AddEventInfoButton();
+    modalContainer.innerHTML = "";
+  });
 
-  const modalTextContainer=document.createElement("div");
-  modalTextContainer.className="modalTextContainer";
+  const modalBackgroundImage = document.createElement("img");
+  modalBackgroundImage.className = "modalBackground";
+  modalBackgroundImage.src = "../images/pokedex.png";
 
-  const modalHeadingDiv=document.createElement("div");
-  modalHeadingDiv.className="modalHeading";
-  modalHeadingDiv.innerText=pHandler.pokemonName.toUpperCase(); 
+  const modalDiv = document.createElement("div");
+  modalDiv.className = "modalDiv";
 
-  const modalTextDiv=document.createElement("div");
-  modalTextDiv.className="modalText";
-  modalTextDiv.innerText=pHandler.flavorTexts[0]; //bytte från flavorTexts[.slice(0,3)]
+  const modalImgDiv = document.createElement("img");
+  modalImgDiv.className = "modalImg";
+  modalImgDiv.src = image;
 
-  
+  const modalTextContainer = document.createElement("div");
+  modalTextContainer.className = "modalTextContainer";
 
-  
-  modalContainer.append(modalBackgroundImage, modalDiv);
+  const modalHeadingDiv = document.createElement("div");
+  modalHeadingDiv.className = "modalHeading";
+  modalHeadingDiv.innerText = name.toUpperCase();
+
+  const modalTextDiv = document.createElement("div");
+  modalTextDiv.className = "modalText";
+  modalTextDiv.innerText = pHandler.flavorTexts[0]; //bytte från flavorTexts[.slice(0,3)]
+
+  modalContainer.append(modalBackgroundImage, modalDiv, closeDiv);
   modalDiv.append(modalImgDiv, modalTextContainer);
   modalTextContainer.append(modalHeadingDiv, modalTextDiv);
-  
 
+  //TODO  - Not working
+  const allInfoButtons = document.querySelectorAll(".info_btn");
+  for (let infoBtn of allInfoButtons) {
+    infoBtn.removeEventListener("click", printModal);
+  }
 }
 
 function printPagination(url: any) {
