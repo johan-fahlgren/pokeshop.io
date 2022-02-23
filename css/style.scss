@@ -106,6 +106,11 @@ main {
     color: black;
     background-color: gold;
     border: 2px solid black;
+    &:hover {
+      cursor: pointer;
+      color: gold;
+      background-color: black;
+    }
   }
 }
 
@@ -126,6 +131,7 @@ main {
   &:hover {
     background-color: gold;
     font-weight: bold;
+    cursor: pointer;
   }
 }
 .btnCurrent {
@@ -159,12 +165,17 @@ main {
 .close_btn {
   position: fixed;
   font-size: 40px;
-  font-weight: bolder;
+  font-weight: bold;
   color: #fb0505;
   top: 50%;
   left: 50%;
-  margin-left: -270px; /* Negative half of width. */
+  padding: 0px 10px;
+  margin-left: -280px; /* Negative half of width. */
   margin-top: -190px; /* Negative half of height. */
+  &:hover {
+    cursor: pointer;
+    color: #9b0505;
+  }
 }
 
 .modalDiv {

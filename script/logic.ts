@@ -49,6 +49,7 @@ export class pokeHandler {
     });
 
     this.getNextPage = urlData.next;
+    
 
     this.getPreviousPage = urlData.previous;
 
@@ -57,7 +58,7 @@ export class pokeHandler {
   }
 
   async getPokemonData(pokemonList: any[]) {
-    //console.log(pokemonObj);
+    
 
     for (let pokemon of pokemonList) {
       let pokemonData = await fetch(pokemon.url).then((response) => {
@@ -92,5 +93,27 @@ export class pokeHandler {
         this.flavorTexts.push(entry.flavor_text);
       }
     });
+  }
+
+  
+  
+  async searchPokemon(value: string | number){
+    const onePokeUrl = new URL("https://pokeapi.co");
+    onePokeUrl.pathname = `/api/v2/pokemon/${value}`;
+    
+    if(typeof value !== "number"){
+      let pokemonId = await fetch(onePokeUrl.href).then((response) =>{
+        if(response.ok){
+          return response.json();
+        }else{
+          return response.status;
+        }
+               
+      });
+      value=pokemonId.id;
+    }
+    
+    return `${value-1}`
+
   }
 }

@@ -1,12 +1,15 @@
 import { pokeHandler } from "./logic.js";
 import "./util.js";
 
+
+
 const pHandler = new pokeHandler();
 const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
   document.getElementById("Products");
 const modalContainer: HTMLElement | any = document.getElementById("Modal");
 
+printHeader();
 printPokemonCards(pHandler.pokeUrl.href);
 
 window.addEventListener("DOMContentLoaded", (event) => {
@@ -16,6 +19,40 @@ window.addEventListener("DOMContentLoaded", (event) => {
   audio.loop = true;
 });
 
+function printHeader(){
+  const headerContainer=document.getElementById("Header");
+  const searchInput = document.createElement("input");
+  searchInput.setAttribute("type", "search");
+  searchInput.setAttribute("placeholder", "Search Pokemon name or pokedex id.");
+  searchInput.className="searchInput";
+
+  const submitBtn=document.createElement("button");
+  submitBtn.innerText="Search";
+  submitBtn.className="submitBtn";
+  submitBtn.addEventListener("click", ()=>{
+    
+    searchHandler(searchInput.value);
+
+  });
+
+  headerContainer?.append(searchInput, submitBtn);
+}
+
+//TODO Clear input.value after printMondal()
+async function searchHandler(searchValue:string | number){
+  const offsetNumber:any = await pHandler.searchPokemon(searchValue);
+  
+  if(offsetNumber==="NaN"){
+    alert("The pokemon you are searching for doesn't exists. Try again!")
+  }
+  await printPokemonCards(`https://pokeapi.co/api/v2/pokemon?offset=${offsetNumber}&limit=12`);
+  modalContainer.style.display = "block";
+  printModal(
+    pHandler.speciesUrls[0],
+    pHandler.pokemonObj[0].sprite,
+    pHandler.pokemonObj[0].name
+  );
+ }
 //TODO - Fix missing abilities.
 async function printPokemonCards(url: any) {
   pHandler.pokemonObj = [];
@@ -88,7 +125,6 @@ function AddEventInfoButton() {
 
 async function printModal(speciesUrl: any, image: string, name: string) {
   productsContainer.classList.add("modalOpen");
-  AddEventInfoButton();
 
   pHandler.flavorTexts = [];
   console.log(speciesUrl);
@@ -100,7 +136,7 @@ async function printModal(speciesUrl: any, image: string, name: string) {
   closeDiv.addEventListener("click", () => {
     modalContainer.style.display = "none";
     productsContainer.classList.remove("modalOpen");
-    AddEventInfoButton();
+
     modalContainer.innerHTML = "";
   });
 
@@ -130,19 +166,20 @@ async function printModal(speciesUrl: any, image: string, name: string) {
   modalDiv.append(modalImgDiv, modalTextContainer);
   modalTextContainer.append(modalHeadingDiv, modalTextDiv);
 
-  //TODO  - Not working
-  const allInfoButtons = document.querySelectorAll(".info_btn");
-  for (let infoBtn of allInfoButtons) {
-    infoBtn.removeEventListener("click", printModal);
-  }
+  //TODO fix this!
+  /* modalContainer.addEventListener("click", function handler(event: any) {
+    if (event.target.firstChild("modalBackground")) return;
+      modalContainer.style.display = "none";
+    
+  }); */
 }
-
 function printPagination(url: any) {
   const startPosition = 41;
   const endPosition = url.search("&");
   let pageNumber = 0;
   if (endPosition !== -1) {
     pageNumber = url.slice(startPosition, endPosition) / 12;
+    
   } else {
     console.warn("endPosition not found, but don't worry!");
   }
@@ -157,9 +194,9 @@ function printPagination(url: any) {
   if (pHandler.getNextPage !== null) {
     btnNext.setAttribute("class", "btnActive");
   }
-
+  const roundPageNumber=Math.round(pageNumber);
   const btnCurrent = document.createElement("button");
-  btnCurrent.innerText = `${pageNumber + 1}`;
+  btnCurrent.innerText = `${roundPageNumber + 1}`;
   btnCurrent.className = "btnCurrent";
 
   const btnPrevious = document.createElement("button");
