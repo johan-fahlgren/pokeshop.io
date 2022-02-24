@@ -19,6 +19,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 function printHeader() {
   const headerContainer = document.getElementById("Header");
+
+  const pageLogo = document.createElement("div");
+  pageLogo.className = "pageLogo";
+
+  const navContainer = document.createElement("div");
+  navContainer.className = "navContainer";
+
+  const audioControls = document.createElement("audio");
+  audioControls.className = "audio";
+  audioControls.src = "/audio/openingTheme.mp3";
+  audioControls.setAttribute("type", "audio/mpeg");
+  audioControls.controls = "controls";
+
   const searchInput = document.createElement("input");
   searchInput.setAttribute("type", "search");
   searchInput.setAttribute("placeholder", "Search Pokemon name or pokedex id.");
@@ -31,7 +44,8 @@ function printHeader() {
     searchHandler(searchInput.value);
   });
 
-  headerContainer?.append(searchInput, submitBtn);
+  headerContainer?.append(pageLogo, navContainer);
+  navContainer.append(audioControls, searchInput, submitBtn);
 }
 
 //TODO Clear input.value after printMondal()
@@ -40,6 +54,7 @@ async function searchHandler(searchValue: string | number) {
 
   if (offsetNumber === "NaN") {
     alert("The pokemon you are searching for doesn't exists. Try again!");
+    return;
   }
   await printPokemonCards(
     `https://pokeapi.co/api/v2/pokemon?offset=${offsetNumber}&limit=12`
