@@ -16,6 +16,38 @@ main {
           justify-content: center;
 }
 
+.header {
+  margin: 30px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 50px;
+  border: solid 2px black;
+  width: 1200px;
+}
+
+.audio {
+  padding-left: 120px;
+}
+
+.searchInput {
+  width: 320px;
+  height: 54px;
+  border-radius: 26px;
+  border: 0px transparent;
+  background-color: #f1f3f4;
+}
+
+.submitBtn {
+  width: 108px;
+  height: 54px;
+  border-radius: 26px;
+  border: 0px transparent;
+}
+
 .Products {
   display: -ms-grid;
   display: grid;
@@ -24,6 +56,7 @@ main {
           justify-content: center;
   -ms-grid-columns: (auto)[3];
       grid-template-columns: repeat(3, auto);
+  width: 1000px;
 }
 
 .cardContainer {

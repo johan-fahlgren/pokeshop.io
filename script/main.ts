@@ -1,8 +1,6 @@
 import { pokeHandler } from "./logic.js";
 import "./util.js";
 
-
-
 const pHandler = new pokeHandler();
 const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
@@ -19,43 +17,44 @@ window.addEventListener("DOMContentLoaded", (event) => {
   audio.loop = true;
 });
 
-function printHeader(){
-  const headerContainer=document.getElementById("Header");
+function printHeader() {
+  const headerContainer = document.getElementById("Header");
   const searchInput = document.createElement("input");
   searchInput.setAttribute("type", "search");
   searchInput.setAttribute("placeholder", "Search Pokemon name or pokedex id.");
-  searchInput.className="searchInput";
+  searchInput.className = "searchInput";
 
-  const submitBtn=document.createElement("button");
-  submitBtn.innerText="Search";
-  submitBtn.className="submitBtn";
-  submitBtn.addEventListener("click", ()=>{
-    
+  const submitBtn = document.createElement("button");
+  submitBtn.innerText = "Search";
+  submitBtn.className = "submitBtn";
+  submitBtn.addEventListener("click", () => {
     searchHandler(searchInput.value);
-
   });
 
   headerContainer?.append(searchInput, submitBtn);
 }
 
 //TODO Clear input.value after printMondal()
-async function searchHandler(searchValue:string | number){
-  const offsetNumber:any = await pHandler.searchPokemon(searchValue);
-  
-  if(offsetNumber==="NaN"){
-    alert("The pokemon you are searching for doesn't exists. Try again!")
+async function searchHandler(searchValue: string | number) {
+  const offsetNumber: any = await pHandler.searchPokemon(searchValue);
+
+  if (offsetNumber === "NaN") {
+    alert("The pokemon you are searching for doesn't exists. Try again!");
   }
-  await printPokemonCards(`https://pokeapi.co/api/v2/pokemon?offset=${offsetNumber}&limit=12`);
+  await printPokemonCards(
+    `https://pokeapi.co/api/v2/pokemon?offset=${offsetNumber}&limit=12`
+  );
   modalContainer.style.display = "block";
   printModal(
     pHandler.speciesUrls[0],
     pHandler.pokemonObj[0].sprite,
     pHandler.pokemonObj[0].name
   );
- }
+}
 //TODO - Fix missing abilities.
 async function printPokemonCards(url: any) {
   pHandler.pokemonObj = [];
+  pHandler.speciesUrls = [];
   productsContainer.innerHTML = "";
   pagination.innerHTML = "";
   await pHandler.fetchPokemonURL(url);
@@ -179,7 +178,6 @@ function printPagination(url: any) {
   let pageNumber = 0;
   if (endPosition !== -1) {
     pageNumber = url.slice(startPosition, endPosition) / 12;
-    
   } else {
     console.warn("endPosition not found, but don't worry!");
   }
@@ -194,7 +192,7 @@ function printPagination(url: any) {
   if (pHandler.getNextPage !== null) {
     btnNext.setAttribute("class", "btnActive");
   }
-  const roundPageNumber=Math.round(pageNumber);
+  const roundPageNumber = Math.round(pageNumber);
   const btnCurrent = document.createElement("button");
   btnCurrent.innerText = `${roundPageNumber + 1}`;
   btnCurrent.className = "btnCurrent";

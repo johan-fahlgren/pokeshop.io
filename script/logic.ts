@@ -32,6 +32,7 @@ export class pokeHandler {
     this.pokemonObj = [];
     this.flavorTexts = [];
     this.speciesUrls = [];
+    console.log(this.speciesUrls);
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
@@ -49,7 +50,6 @@ export class pokeHandler {
     });
 
     this.getNextPage = urlData.next;
-    
 
     this.getPreviousPage = urlData.previous;
 
@@ -58,8 +58,6 @@ export class pokeHandler {
   }
 
   async getPokemonData(pokemonList: any[]) {
-    
-
     for (let pokemon of pokemonList) {
       let pokemonData = await fetch(pokemon.url).then((response) => {
         return response.json();
@@ -95,25 +93,21 @@ export class pokeHandler {
     });
   }
 
-  
-  
-  async searchPokemon(value: string | number){
+  async searchPokemon(value: string | number) {
     const onePokeUrl = new URL("https://pokeapi.co");
     onePokeUrl.pathname = `/api/v2/pokemon/${value}`;
-    
-    if(typeof value !== "number"){
-      let pokemonId = await fetch(onePokeUrl.href).then((response) =>{
-        if(response.ok){
+
+    if (typeof value !== "number") {
+      let pokemonId = await fetch(onePokeUrl.href).then((response) => {
+        if (response.ok) {
           return response.json();
-        }else{
+        } else {
           return response.status;
         }
-               
       });
-      value=pokemonId.id;
+      value = pokemonId.id;
     }
-    
-    return `${value-1}`
 
+    return `${value - 1}`;
   }
 }
