@@ -29,7 +29,7 @@ main {
     padding: 20px 0;
     height: 150px;
     width: 100%;
-    background-color: #f1f3f4;
+    background-color: #b2d4d4;
     background-image: url("../images/PokeShop.png");
     background-repeat: no-repeat;
     background-position: center;
@@ -263,9 +263,9 @@ main {
 .pagination {
   display: flex;
   justify-content: center;
+  margin: 30px 0;
   & button {
     margin: 10px;
-    margin-bottom: 50px;
     padding: 5px;
     width: 120px;
     font-size: larger;
@@ -292,4 +292,16 @@ main {
   background-color: gold;
   font-weight: bold;
   color: black !important;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #b2d4d4;
+  height: 150px;
+  & p {
+    color: white;
+    font-weight: bold;
+  }
 }

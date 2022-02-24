@@ -41,7 +41,7 @@ main {
   padding: 20px 0;
   height: 150px;
   width: 100%;
-  background-color: #f1f3f4;
+  background-color: #b2d4d4;
   background-image: url("../images/PokeShop.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -327,11 +327,11 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin: 30px 0;
 }
 
 .pagination button {
   margin: 10px;
-  margin-bottom: 50px;
   padding: 5px;
   width: 120px;
   font-size: larger;
@@ -360,5 +360,24 @@ main {
   background-color: gold;
   font-weight: bold;
   color: black !important;
+}
+
+footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #b2d4d4;
+  height: 150px;
+}
+
+footer p {
+  color: white;
+  font-weight: bold;
 }
 /*# sourceMappingURL=style.css.map */
