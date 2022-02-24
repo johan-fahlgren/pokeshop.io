@@ -224,7 +224,7 @@ async function printModal(index:any, speciesUrl: any, image: string, name: strin
   }); */
 }
 function printPagination(url: any) {
-  const startPosition = 41;
+  const startPosition = 40;
   const endPosition = url.search("&");
   let pageNumber = 0;
   if (endPosition !== -1) {
@@ -262,6 +262,11 @@ function printPagination(url: any) {
   btnNext.id = "next_btn";
   btnNext.innerText = "Next";
   btnNext.addEventListener("click", () => {
+
+    if(pHandler.getNextPage===pHandler.offsetUrl){
+      alert("You have reached the last page for now.");
+      return;
+    } 
     if (pHandler.getNextPage !== null) {
       printPokemonCards(pHandler.getNextPage);
     }
@@ -276,7 +281,7 @@ function printPagination(url: any) {
   btnLastPage.innerText = ">>";
   btnLastPage.className = "btnActive";
   btnLastPage.addEventListener("click", () => {
-    printPokemonCards(`${pHandler.pokeUrl}&offset=0`);
+    printPokemonCards(pHandler.lastPageUrl);
   });
 
   pagination?.append(

@@ -3,9 +3,12 @@ export class pokeHandler {
   speciesUrls: any[];
   flavorTexts: any[];
   pokeUrl: URL;
+  lastPageUrl: string;
+  offsetUrl: string;
 
   getNextPage: string = "";
   getPreviousPage: string = "";
+  
 
   typeColor: any = {
     bug: "#26de81",
@@ -32,12 +35,16 @@ export class pokeHandler {
     this.pokemonObj = [];
     this.flavorTexts = [];
     this.speciesUrls = [];
-    console.log(this.speciesUrls);
+    this.lastPageUrl="https://pokeapi.co/api/v2/pokemon?offset=886&limit=12";
+    this.offsetUrl="https://pokeapi.co/api/v2/pokemon?offset=898&limit=12";
+    
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
     this.pokeUrl.pathname = "/api/v2/pokemon";
     this.pokeUrl.searchParams.set("limit", "12");
+
+    
   
   }
 
@@ -49,9 +56,12 @@ export class pokeHandler {
         throw "Something went wrong, status: " + response.status;
       }
     });
+    console.log(pokeUrl)
+    console.log(this.offsetUrl)
+    console.log(this.lastPageUrl)
+    console.log(urlData.next)
 
     this.getNextPage = urlData.next;
-
     this.getPreviousPage = urlData.previous;
 
     const pokemonList: any[] = urlData.results;
