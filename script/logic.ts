@@ -56,10 +56,7 @@ export class pokeHandler {
         throw "Something went wrong, status: " + response.status;
       }
     });
-    console.log(pokeUrl)
-    console.log(this.offsetUrl)
-    console.log(this.lastPageUrl)
-    console.log(urlData.next)
+    
 
     this.getNextPage = urlData.next;
     this.getPreviousPage = urlData.previous;

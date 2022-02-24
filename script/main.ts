@@ -51,7 +51,7 @@ function printHeader() {
 //TODO Clear input.value after printModal()
 async function searchHandler(searchValue: string | number) {
   const offsetNumber: any = await pHandler.searchPokemon(searchValue);
-
+ 
   if (offsetNumber === "NaN") {
     alert("The pokemon you are searching for doesn't exists. Try again!");
     return;
@@ -224,7 +224,7 @@ async function printModal(index:any, speciesUrl: any, image: string, name: strin
   }); */
 }
 function printPagination(url: any) {
-  const startPosition = 40;
+  const startPosition = 41;
   const endPosition = url.search("&");
   let pageNumber = 0;
   if (endPosition !== -1) {
@@ -236,10 +236,14 @@ function printPagination(url: any) {
   const btnFirstPage = document.createElement("button");
   btnFirstPage.id = "firstPage_btn";
   btnFirstPage.innerText = "<<";
-  btnFirstPage.className = "btnActive";
-  btnFirstPage.addEventListener("click", () => {
-    printPokemonCards(`${pHandler.pokeUrl}&offset=0`);
-  });
+
+  if(url != pHandler.pokeUrl){
+    btnFirstPage.className = "btnActive";
+    btnFirstPage.addEventListener("click", () => {
+      printPokemonCards(`${pHandler.pokeUrl}&offset=0`);
+    });
+  }
+  
 
   const btnPrevious = document.createElement("button");
   btnPrevious.id = "prev_btn";
@@ -261,12 +265,13 @@ function printPagination(url: any) {
   const btnNext = document.createElement("button");
   btnNext.id = "next_btn";
   btnNext.innerText = "Next";
+  if(url != pHandler.lastPageUrl){
   btnNext.addEventListener("click", () => {
 
-    if(pHandler.getNextPage===pHandler.offsetUrl){
+    /* if(pHandler.getNextPage===pHandler.offsetUrl){
       alert("You have reached the last page for now.");
       return;
-    } 
+    }  */
     if (pHandler.getNextPage !== null) {
       printPokemonCards(pHandler.getNextPage);
     }
@@ -274,16 +279,17 @@ function printPagination(url: any) {
   if (pHandler.getNextPage !== null) {
     btnNext.setAttribute("class", "btnActive");
   }
-
-  //TODO skapa rätt sida
+  }
   const btnLastPage = document.createElement("button");
   btnLastPage.id = "LastPage_btn";
   btnLastPage.innerText = ">>";
+  
+  if(url != pHandler.lastPageUrl){
   btnLastPage.className = "btnActive";
   btnLastPage.addEventListener("click", () => {
     printPokemonCards(pHandler.lastPageUrl);
   });
-
+  }
   pagination?.append(
     btnFirstPage,
     btnPrevious,

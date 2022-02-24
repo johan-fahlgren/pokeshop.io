@@ -210,42 +210,6 @@ main {
   background-color: black;
 }
 
-.pagination {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-.pagination button {
-  margin: 10px;
-  margin-bottom: 50px;
-  padding: 5px;
-  width: 120px;
-  font-size: larger;
-  border-radius: 5px;
-  border: 3px solid gold;
-  background-color: #fff27c;
-}
-
-.btnActive:hover {
-  background-color: gold;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btnCurrent {
-  max-width: 50px;
-  margin: 10px;
-  padding: 5px;
-  font-size: larger;
-  border-radius: 5px;
-  background-color: gold;
-  font-weight: bold;
-}
-
 .Modal {
   position: fixed;
   display: none;
@@ -354,5 +318,47 @@ main {
 .modalOpen {
   -webkit-filter: blur(5px);
           filter: blur(5px);
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.pagination button {
+  margin: 10px;
+  margin-bottom: 50px;
+  padding: 5px;
+  width: 120px;
+  font-size: larger;
+  border-radius: 5px;
+  border: 3px solid gold;
+  background-color: #fff27c;
+  color: grey;
+}
+
+.btnActive {
+  color: black !important;
+}
+
+.btnActive:hover {
+  background-color: gold;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnCurrent {
+  max-width: 50px;
+  margin: 10px;
+  padding: 5px;
+  font-size: larger;
+  border-radius: 5px;
+  background-color: gold;
+  font-weight: bold;
+  color: black !important;
 }
 /*# sourceMappingURL=style.css.map */
