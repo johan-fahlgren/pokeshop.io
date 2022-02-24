@@ -38,6 +38,7 @@ export class pokeHandler {
     this.pokeUrl = new URL("https://pokeapi.co");
     this.pokeUrl.pathname = "/api/v2/pokemon";
     this.pokeUrl.searchParams.set("limit", "12");
+  
   }
 
   async fetchPokemonURL(pokeUrl: string) {

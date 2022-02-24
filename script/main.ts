@@ -48,7 +48,7 @@ function printHeader() {
   navContainer.append(audioControls, searchInput, submitBtn);
 }
 
-//TODO Clear input.value after printMondal()
+//TODO Clear input.value after printModal()
 async function searchHandler(searchValue: string | number) {
   const offsetNumber: any = await pHandler.searchPokemon(searchValue);
 
@@ -61,6 +61,7 @@ async function searchHandler(searchValue: string | number) {
   );
   modalContainer.style.display = "block";
   printModal(
+    0,    
     pHandler.speciesUrls[0],
     pHandler.pokemonObj[0].sprite,
     pHandler.pokemonObj[0].name
@@ -128,7 +129,9 @@ function AddEventInfoButton() {
   allInfoButtons.forEach((infoBtn, index) => {
     infoBtn.addEventListener("click", () => {
       modalContainer.style.display = "block";
+      console.log(index);
       printModal(
+        index,
         pHandler.speciesUrls[index],
         pHandler.pokemonObj[index].sprite,
         pHandler.pokemonObj[index].name
@@ -137,11 +140,11 @@ function AddEventInfoButton() {
   });
 }
 
-async function printModal(speciesUrl: any, image: string, name: string) {
-  productsContainer.classList.add("modalOpen");
+async function printModal(index:any, speciesUrl: any, image: string, name: string) {
+  productsContainer.classList.add("modalOpen"); //TODO se til att allt utom modal blir suddigt
 
   pHandler.flavorTexts = [];
-  console.log(speciesUrl);
+  //console.log(speciesUrl);
   await pHandler.fetchSpeciesData(speciesUrl);
 
   const closeDiv = document.createElement("div");
@@ -154,20 +157,22 @@ async function printModal(speciesUrl: any, image: string, name: string) {
     modalContainer.innerHTML = "";
   });
 
-  const modalBackgroundImage = document.createElement("img");
+  //ModalBackground
+  const modalBackgroundImage = document.createElement("div");
   modalBackgroundImage.className = "modalBackground";
-  modalBackgroundImage.src = "../images/pokedex.png";
+  //modalBackgroundImage.src = "../images/pokedex.png";
 
-  const modalDiv = document.createElement("div");
-  modalDiv.className = "modalDiv";
+  //Left Modal Div
+  const modalDivLeft = document.createElement("div");
+  modalDivLeft.className = "modalDivLeft";
 
   const modalImgDiv = document.createElement("img");
-  modalImgDiv.className = "modalImg";
   modalImgDiv.src = image;
 
-  const modalTextContainer = document.createElement("div");
-  modalTextContainer.className = "modalTextContainer";
-
+  //Right Modal Div
+  const modalDivRight = document.createElement("div");
+  modalDivRight.className = "modalDivRight";
+  
   const modalHeadingDiv = document.createElement("div");
   modalHeadingDiv.className = "modalHeading";
   modalHeadingDiv.innerText = name.toUpperCase();
@@ -176,10 +181,41 @@ async function printModal(speciesUrl: any, image: string, name: string) {
   modalTextDiv.className = "modalText";
   modalTextDiv.innerText = pHandler.flavorTexts[0]; //bytte från flavorTexts[.slice(0,3)]
 
-  modalContainer.append(modalBackgroundImage, modalDiv, closeDiv);
-  modalDiv.append(modalImgDiv, modalTextContainer);
-  modalTextContainer.append(modalHeadingDiv, modalTextDiv);
+  const modalButtonsDiv=document.createElement("div");
+  modalButtonsDiv.className="modalButtonsDiv";
 
+  const modalPrevPokeBtn =document.createElement("button");
+  modalPrevPokeBtn.innerText="<";
+  modalPrevPokeBtn.addEventListener("click", ()=>{
+    if(index===0){
+      alert("No more PokeMons on this page.")
+      return;
+    }
+    modalContainer.innerHTML="";
+    printModal(index-1, pHandler.speciesUrls[index-1],
+      pHandler.pokemonObj[index-1].sprite,
+      pHandler.pokemonObj[index-1].name)
+  });
+
+  const modalNextPokeBtn =document.createElement("button");
+  modalNextPokeBtn.innerText=">";
+  modalNextPokeBtn.addEventListener("click", ()=>{
+    if(index===11){
+      alert("No more PokeMons on this page.")
+      return;
+    }
+    modalContainer.innerHTML="";
+    printModal(index+1, 
+      pHandler.speciesUrls[index+1],
+      pHandler.pokemonObj[index+1].sprite,
+      pHandler.pokemonObj[index+1].name)
+  });
+  
+  modalContainer.append(modalBackgroundImage);
+  modalBackgroundImage.append(modalDivLeft, modalDivRight, closeDiv, modalButtonsDiv);
+  modalDivLeft.append(modalImgDiv);
+  modalDivRight.append(modalHeadingDiv, modalTextDiv);
+  modalButtonsDiv.append(modalPrevPokeBtn, modalNextPokeBtn)
   //TODO fix this!
   /* modalContainer.addEventListener("click", function handler(event: any) {
     if (event.target.firstChild("modalBackground")) return;
@@ -196,6 +232,32 @@ function printPagination(url: any) {
   } else {
     console.warn("endPosition not found, but don't worry!");
   }
+
+  const btnFirstPage = document.createElement("button");
+  btnFirstPage.id = "firstPage_btn";
+  btnFirstPage.innerText = "<<";
+  btnFirstPage.className = "btnActive";
+  btnFirstPage.addEventListener("click", () => {
+    printPokemonCards(`${pHandler.pokeUrl}&offset=0`);
+  });
+
+  const btnPrevious = document.createElement("button");
+  btnPrevious.id = "prev_btn";
+  btnPrevious.innerText = "Previous";
+  btnPrevious.onclick = () => {
+    if (pHandler.getPreviousPage !== null) {
+      printPokemonCards(pHandler.getPreviousPage);
+    }
+  };
+  if (pHandler.getPreviousPage !== null) {
+    btnPrevious.setAttribute("class", "btnActive");
+  }
+
+  const roundPageNumber = Math.round(pageNumber);
+  const btnCurrent = document.createElement("button");
+  btnCurrent.innerText = `${roundPageNumber + 1}`;
+  btnCurrent.className = "btnCurrent";
+
   const btnNext = document.createElement("button");
   btnNext.id = "next_btn";
   btnNext.innerText = "Next";
@@ -207,25 +269,21 @@ function printPagination(url: any) {
   if (pHandler.getNextPage !== null) {
     btnNext.setAttribute("class", "btnActive");
   }
-  const roundPageNumber = Math.round(pageNumber);
-  const btnCurrent = document.createElement("button");
-  btnCurrent.innerText = `${roundPageNumber + 1}`;
-  btnCurrent.className = "btnCurrent";
 
-  const btnPrevious = document.createElement("button");
-  btnPrevious.id = "prev_btn";
-  btnPrevious.innerText = "Previous";
-  btnPrevious.onclick = () => {
-    if (pHandler.getPreviousPage !== null) {
-      printPokemonCards(pHandler.getPreviousPage);
-    }
-  };
+  //TODO skapa rätt sida
+  const btnLastPage = document.createElement("button");
+  btnLastPage.id = "LastPage_btn";
+  btnLastPage.innerText = ">>";
+  btnLastPage.className = "btnActive";
+  btnLastPage.addEventListener("click", () => {
+    printPokemonCards(`${pHandler.pokeUrl}&offset=0`);
+  });
 
-  if (pHandler.getPreviousPage !== null) {
-    btnPrevious.setAttribute("class", "btnActive");
-  }
-
-  pagination?.append(btnPrevious);
-  pagination?.append(btnCurrent);
-  pagination?.append(btnNext);
+  pagination?.append(
+    btnFirstPage,
+    btnPrevious,
+    btnCurrent,
+    btnNext,
+    btnLastPage
+  );
 }

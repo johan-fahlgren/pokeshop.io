@@ -221,6 +221,7 @@ main {
 
 .pagination button {
   margin: 10px;
+  margin-bottom: 50px;
   padding: 5px;
   width: 120px;
   font-size: larger;
@@ -236,8 +237,7 @@ main {
 }
 
 .btnCurrent {
-  min-width: 50px;
-  max-width: 70px;
+  max-width: 50px;
   margin: 10px;
   padding: 5px;
   font-size: larger;
@@ -255,13 +255,17 @@ main {
 
 .modalBackground {
   position: fixed;
+  z-index: -5;
   width: 600px;
+  height: 450px;
   top: 50%;
   left: 50%;
   margin-left: -300px;
   /* Negative half of width. */
   margin-top: -200px;
   /* Negative half of height. */
+  background-image: url("../images/pokedex.png");
+  background-size: cover;
 }
 
 .close_btn {
@@ -269,13 +273,10 @@ main {
   font-size: 40px;
   font-weight: bold;
   color: #fb0505;
-  top: 50%;
-  left: 50%;
   padding: 0px 10px;
-  margin-left: -280px;
-  /* Negative half of width. */
-  margin-top: -190px;
-  /* Negative half of height. */
+  margin-top: 11px;
+  margin-left: 19px;
+  text-shadow: 1px 1px 2px black;
 }
 
 .close_btn:hover {
@@ -283,32 +284,46 @@ main {
   color: #9b0505;
 }
 
-.modalDiv {
+.modalDivLeft,
+.modalDivRight,
+.modalButtonsDiv {
   z-index: 1;
   position: fixed;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 15px;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  text-align: center;
+}
+
+.modalDivLeft,
+.modalDivRight {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 500px;
-  height: 300px;
-  top: 50%;
-  left: 50%;
-  margin-left: -250px;
-  /* Negative half of width. */
-  margin-top: -150px;
-  /* Negative half of height. */
+  width: 220px;
+  height: 270px;
+}
+
+.modalDivLeft {
+  margin-left: 36px;
+  margin-top: 120px;
+}
+
+.modalDivLeft img {
+  width: 240px;
+}
+
+.modalDivRight {
+  text-align: center;
+  margin-left: 351px;
+  margin-top: 115px;
 }
 
 .modalHeading {
-  max-width: 200px;
+  max-width: 250px;
   font-size: 25px;
   font-weight: bold;
   color: #fb0505;
@@ -316,11 +331,24 @@ main {
 }
 
 .modalText {
-  max-width: 200px;
+  font-size: 18px;
+  padding: 0 15px;
+  max-width: 220px;
 }
 
-.modalImg {
-  width: 200px;
+.modalButtonsDiv {
+  position: fixed;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100px;
+  margin-left: 86px;
+  margin-top: 374px;
+}
+
+.modalButtonsDiv button {
+  -webkit-box-shadow: 2px 2px 3px black;
+          box-shadow: 2px 2px 3px black;
+  cursor: pointer;
 }
 
 .modalOpen {
