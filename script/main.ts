@@ -2,13 +2,23 @@ import { pokeHandler } from "./logic.js";
 import "./util.js";
 
 const pHandler = new pokeHandler();
+const mainElement = document.querySelector("main");
 const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
   document.getElementById("Products");
 const modalContainer: HTMLElement | any = document.getElementById("Modal");
+const productsTextElement = document.querySelector(".productsText");
 
-printHeader();
-printPokemonCards(pHandler.pokeUrl.href);
+onLoad();
+
+function onLoad() {
+  printHeader();
+  printPokemonCards(pHandler.pokeUrl.href);
+
+  const productText = document.createElement("div");
+  productText.className = "productsText";
+  mainElement?.prepend(productText);
+}
 
 window.addEventListener("DOMContentLoaded", (event) => {
   const audio: any = document.querySelector("audio");
@@ -36,22 +46,30 @@ function printHeader() {
   searchInput.setAttribute("type", "search");
   searchInput.setAttribute("placeholder", "Search Pokemon name or pokedex id.");
   searchInput.className = "searchInput";
+  searchInput.addEventListener("keyup", (e) => {
+    if (e.keyCode === 13) {
+      searchHandler(searchInput.value);
+    }
+  });
 
   const submitBtn = document.createElement("button");
-  submitBtn.innerText = "Search";
   submitBtn.className = "submitBtn";
   submitBtn.addEventListener("click", () => {
     searchHandler(searchInput.value);
   });
 
+  //Cart Button
+  const cartBtn = document.createElement("button");
+  cartBtn.className = "cart_btn";
+
   headerContainer?.append(pageLogo, navContainer);
-  navContainer.append(audioControls, searchInput, submitBtn);
+  navContainer.append(audioControls, searchInput, submitBtn, cartBtn);
 }
 
 //TODO Clear input.value after printModal()
 async function searchHandler(searchValue: string | number) {
   const offsetNumber: any = await pHandler.searchPokemon(searchValue);
- 
+
   if (offsetNumber === "NaN") {
     alert("The pokemon you are searching for doesn't exists. Try again!");
     return;
@@ -61,7 +79,7 @@ async function searchHandler(searchValue: string | number) {
   );
   modalContainer.style.display = "block";
   printModal(
-    0,    
+    0,
     pHandler.speciesUrls[0],
     pHandler.pokemonObj[0].sprite,
     pHandler.pokemonObj[0].name
@@ -73,6 +91,7 @@ async function printPokemonCards(url: any) {
   pHandler.speciesUrls = [];
   productsContainer.innerHTML = "";
   pagination.innerHTML = "";
+
   await pHandler.fetchPokemonURL(url);
   let pokemonid = 0;
 
@@ -140,7 +159,12 @@ function AddEventInfoButton() {
   });
 }
 
-async function printModal(index:any, speciesUrl: any, image: string, name: string) {
+async function printModal(
+  index: any,
+  speciesUrl: any,
+  image: string,
+  name: string
+) {
   productsContainer.classList.add("modalOpen"); //TODO se til att allt utom modal blir suddigt
 
   pHandler.flavorTexts = [];
@@ -172,7 +196,7 @@ async function printModal(index:any, speciesUrl: any, image: string, name: strin
   //Right Modal Div
   const modalDivRight = document.createElement("div");
   modalDivRight.className = "modalDivRight";
-  
+
   const modalHeadingDiv = document.createElement("div");
   modalHeadingDiv.className = "modalHeading";
   modalHeadingDiv.innerText = name.toUpperCase();
@@ -181,41 +205,51 @@ async function printModal(index:any, speciesUrl: any, image: string, name: strin
   modalTextDiv.className = "modalText";
   modalTextDiv.innerText = pHandler.flavorTexts[0]; //bytte från flavorTexts[.slice(0,3)]
 
-  const modalButtonsDiv=document.createElement("div");
-  modalButtonsDiv.className="modalButtonsDiv";
+  const modalButtonsDiv = document.createElement("div");
+  modalButtonsDiv.className = "modalButtonsDiv";
 
-  const modalPrevPokeBtn =document.createElement("button");
-  modalPrevPokeBtn.innerText="<";
-  modalPrevPokeBtn.addEventListener("click", ()=>{
-    if(index===0){
-      alert("No more PokeMons on this page.")
+  const modalPrevPokeBtn = document.createElement("button");
+  modalPrevPokeBtn.innerText = "<";
+  modalPrevPokeBtn.addEventListener("click", () => {
+    if (index === 0) {
+      alert("No more PokeMons on this page.");
       return;
     }
-    modalContainer.innerHTML="";
-    printModal(index-1, pHandler.speciesUrls[index-1],
-      pHandler.pokemonObj[index-1].sprite,
-      pHandler.pokemonObj[index-1].name)
+    modalContainer.innerHTML = "";
+    printModal(
+      index - 1,
+      pHandler.speciesUrls[index - 1],
+      pHandler.pokemonObj[index - 1].sprite,
+      pHandler.pokemonObj[index - 1].name
+    );
   });
 
-  const modalNextPokeBtn =document.createElement("button");
-  modalNextPokeBtn.innerText=">";
-  modalNextPokeBtn.addEventListener("click", ()=>{
-    if(index===11){
-      alert("No more PokeMons on this page.")
+  const modalNextPokeBtn = document.createElement("button");
+  modalNextPokeBtn.innerText = ">";
+  modalNextPokeBtn.addEventListener("click", () => {
+    if (index === 11) {
+      alert("No more PokeMons on this page.");
       return;
     }
-    modalContainer.innerHTML="";
-    printModal(index+1, 
-      pHandler.speciesUrls[index+1],
-      pHandler.pokemonObj[index+1].sprite,
-      pHandler.pokemonObj[index+1].name)
+    modalContainer.innerHTML = "";
+    printModal(
+      index + 1,
+      pHandler.speciesUrls[index + 1],
+      pHandler.pokemonObj[index + 1].sprite,
+      pHandler.pokemonObj[index + 1].name
+    );
   });
-  
+
   modalContainer.append(modalBackgroundImage);
-  modalBackgroundImage.append(modalDivLeft, modalDivRight, closeDiv, modalButtonsDiv);
+  modalBackgroundImage.append(
+    modalDivLeft,
+    modalDivRight,
+    closeDiv,
+    modalButtonsDiv
+  );
   modalDivLeft.append(modalImgDiv);
   modalDivRight.append(modalHeadingDiv, modalTextDiv);
-  modalButtonsDiv.append(modalPrevPokeBtn, modalNextPokeBtn)
+  modalButtonsDiv.append(modalPrevPokeBtn, modalNextPokeBtn);
   //TODO fix this!
   /* modalContainer.addEventListener("click", function handler(event: any) {
     if (event.target.firstChild("modalBackground")) return;
@@ -237,13 +271,12 @@ function printPagination(url: any) {
   btnFirstPage.id = "firstPage_btn";
   btnFirstPage.innerText = "<<";
 
-  if(url != pHandler.pokeUrl){
+  if (url != pHandler.pokeUrl) {
     btnFirstPage.className = "btnActive";
     btnFirstPage.addEventListener("click", () => {
       printPokemonCards(`${pHandler.pokeUrl}&offset=0`);
     });
   }
-  
 
   const btnPrevious = document.createElement("button");
   btnPrevious.id = "prev_btn";
@@ -265,30 +298,29 @@ function printPagination(url: any) {
   const btnNext = document.createElement("button");
   btnNext.id = "next_btn";
   btnNext.innerText = "Next";
-  if(url != pHandler.lastPageUrl){
-  btnNext.addEventListener("click", () => {
-
-    /* if(pHandler.getNextPage===pHandler.offsetUrl){
+  if (url != pHandler.lastPageUrl) {
+    btnNext.addEventListener("click", () => {
+      /* if(pHandler.getNextPage===pHandler.offsetUrl){
       alert("You have reached the last page for now.");
       return;
     }  */
+      if (pHandler.getNextPage !== null) {
+        printPokemonCards(pHandler.getNextPage);
+      }
+    });
     if (pHandler.getNextPage !== null) {
-      printPokemonCards(pHandler.getNextPage);
+      btnNext.setAttribute("class", "btnActive");
     }
-  });
-  if (pHandler.getNextPage !== null) {
-    btnNext.setAttribute("class", "btnActive");
-  }
   }
   const btnLastPage = document.createElement("button");
   btnLastPage.id = "LastPage_btn";
   btnLastPage.innerText = ">>";
-  
-  if(url != pHandler.lastPageUrl){
-  btnLastPage.className = "btnActive";
-  btnLastPage.addEventListener("click", () => {
-    printPokemonCards(pHandler.lastPageUrl);
-  });
+
+  if (url != pHandler.lastPageUrl) {
+    btnLastPage.className = "btnActive";
+    btnLastPage.addEventListener("click", () => {
+      printPokemonCards(pHandler.lastPageUrl);
+    });
   }
   pagination?.append(
     btnFirstPage,

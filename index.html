@@ -23,7 +23,7 @@
       sizes="16x16"
       href="images/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="/site.webmanifest" />
+    <!--  <link rel="manifest" href="/site.webmanifest" /> -->
     <link rel="shortcut icon" href="#" />
     <script type="module" src="dist/main.js"></script>
   </head>
@@ -38,4 +38,18 @@
     </section>
     <footer><p>&copy; PokéShop 2022</p></footer>
   </body>
+  <script>
+    $("body").append(
+      '<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>'
+    );
+    $(window).on("load", function () {
+      setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+    });
+    function removeLoader() {
+      $("#loadingDiv").fadeOut(500, function () {
+        // fadeOut complete. Remove the loading div
+        $("#loadingDiv").remove(); //makes page more lightweight
+      });
+    }
+  </script>
 </html>
