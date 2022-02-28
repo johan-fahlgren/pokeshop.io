@@ -61,6 +61,7 @@ function printHeader() {
     searchHandler(searchInput.value);
   });
 
+  //TODO - Add on click event
   //Cart Button
   const cartBtn = document.createElement("button");
   cartBtn.className = "cart_btn";
@@ -282,6 +283,7 @@ function printPagination(url: any) {
     console.warn("endPosition not found, but don't worry!");
   }
 
+  //First page button
   const btnFirstPage = document.createElement("button");
   btnFirstPage.id = "firstPage_btn";
   btnFirstPage.innerText = "<<";
@@ -293,6 +295,7 @@ function printPagination(url: any) {
     });
   }
 
+  //Previous page button
   const btnPrevious = document.createElement("button");
   btnPrevious.id = "prev_btn";
   btnPrevious.innerText = "Previous";
@@ -305,20 +308,18 @@ function printPagination(url: any) {
     btnPrevious.setAttribute("class", "btnActive");
   }
 
+  //Current page button
   const roundPageNumber = Math.round(pageNumber);
   const btnCurrent = document.createElement("button");
   btnCurrent.innerText = `${roundPageNumber + 1}`;
   btnCurrent.className = "btnCurrent";
 
+  //Next page button
   const btnNext = document.createElement("button");
   btnNext.id = "next_btn";
   btnNext.innerText = "Next";
   if (url != pHandler.lastPageUrl) {
     btnNext.addEventListener("click", () => {
-      /* if(pHandler.getNextPage===pHandler.offsetUrl){
-      alert("You have reached the last page for now.");
-      return;
-    }  */
       if (pHandler.getNextPage !== null) {
         printPokemonCards(pHandler.getNextPage);
       }
@@ -327,6 +328,8 @@ function printPagination(url: any) {
       btnNext.setAttribute("class", "btnActive");
     }
   }
+
+  // Last page button
   const btnLastPage = document.createElement("button");
   btnLastPage.id = "LastPage_btn";
   btnLastPage.innerText = ">>";
@@ -337,6 +340,8 @@ function printPagination(url: any) {
       printPokemonCards(pHandler.lastPageUrl);
     });
   }
+
+  //Appending pagination elements
   pagination?.append(
     btnFirstPage,
     btnPrevious,
@@ -348,6 +353,10 @@ function printPagination(url: any) {
 function AddEventAddToCartButton() {
   const allAddToCartButtons = document.querySelectorAll(".AddToCart_btn");
 
+  //TODO - only send pokemonObj.
+  //TODO - Stack same pokemon in cart.
+  //TODO - Show number of items in cart.
+  //TODO - LocalStorage implementation?
   allAddToCartButtons.forEach((cartBtn, index) => {
     cartBtn.addEventListener("click", () => {
       popupCart.style.display = "block";
@@ -359,6 +368,8 @@ function AddEventAddToCartButton() {
     });
   });
 }
+
+//TODO - Show total number of  same item.
 function printPopupCart() {
   let totalPriceCart: any = 0;
   popupCart.innerHTML = `<h2>Your PokéShop Cart</h2>

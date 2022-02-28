@@ -2,14 +2,13 @@ export class pokeHandler {
   pokemonObj: any[];
   speciesUrls: any[];
   flavorTexts: any[];
-  cartItems:any[];
+  cartItems: any[];
   pokeUrl: URL;
   lastPageUrl: string;
   offsetUrl: string;
 
   getNextPage: string = "";
   getPreviousPage: string = "";
-  
 
   typeColor: any = {
     bug: "#26de81",
@@ -36,18 +35,14 @@ export class pokeHandler {
     this.pokemonObj = [];
     this.flavorTexts = [];
     this.speciesUrls = [];
-    this.cartItems=[]; 
-    this.lastPageUrl="https://pokeapi.co/api/v2/pokemon?offset=886&limit=12";
-    this.offsetUrl="https://pokeapi.co/api/v2/pokemon?offset=898&limit=12";
-    
+    this.cartItems = [];
+    this.lastPageUrl = "https://pokeapi.co/api/v2/pokemon?offset=886&limit=12";
+    this.offsetUrl = "https://pokeapi.co/api/v2/pokemon?offset=898&limit=12";
 
     /* POKEMON-API URL SETUP */
     this.pokeUrl = new URL("https://pokeapi.co");
     this.pokeUrl.pathname = "/api/v2/pokemon";
     this.pokeUrl.searchParams.set("limit", "12");
-
-    
-  
   }
 
   async fetchPokemonURL(pokeUrl: string) {
@@ -58,7 +53,6 @@ export class pokeHandler {
         throw "Something went wrong, status: " + response.status;
       }
     });
-    
 
     this.getNextPage = urlData.next;
     this.getPreviousPage = urlData.previous;
@@ -67,6 +61,7 @@ export class pokeHandler {
     return this.getPokemonData(pokemonList);
   }
 
+  //TODO - Add price property to pokemonObj Array.
   async getPokemonData(pokemonList: any[]) {
     for (let pokemon of pokemonList) {
       let pokemonData = await fetch(pokemon.url).then((response) => {
