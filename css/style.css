@@ -296,15 +296,17 @@ main {
 }
 
 .Modal {
-  position: fixed;
+  border: 1px solid black;
+  position: absolute;
+  top: 306px;
+  margin: auto;
   display: none;
-  width: 100vw;
-  height: 100vh;
+  width: 1200px;
+  height: 2100px;
 }
 
 .modalBackground {
   position: fixed;
-  z-index: -5;
   width: 600px;
   height: 450px;
   top: 50%;

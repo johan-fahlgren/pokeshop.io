@@ -6,8 +6,7 @@ const mainElement = document.querySelector("main");
 const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
   document.getElementById("Products");
-const modalContainer: HTMLElement | any = document.getElementById("Modal");
-//const productsTextElement = document.querySelector(".productsText");
+const modalElement: HTMLElement | any = document.getElementById("Modal");
 const popupCart: HTMLElement | any = document.getElementById("PopupCart");
 
 onLoad();
@@ -83,7 +82,7 @@ async function searchHandler(searchValue: string | number) {
   await printPokemonCards(
     `https://pokeapi.co/api/v2/pokemon?offset=${offsetNumber}&limit=12`
   );
-  modalContainer.style.display = "block";
+  modalElement.style.display = "block";
   printModal(
     0,
     pHandler.speciesUrls[0],
@@ -156,7 +155,7 @@ function AddEventInfoButton() {
 
   allInfoButtons.forEach((infoBtn, index) => {
     infoBtn.addEventListener("click", () => {
-      modalContainer.style.display = "block";
+      modalElement.style.display = "block";
       printModal(
         index,
         pHandler.speciesUrls[index],
@@ -173,8 +172,10 @@ async function printModal(
   image: string,
   name: string
 ) {
-  productsContainer.classList.add("modalOpen"); //TODO se til att allt utom modal blir suddigt
-
+  const productsHeadingElement = document.querySelector(".productsText");
+  productsContainer.classList.add("modalOpen");
+  pagination.classList.add("modalOpen");
+  productsHeadingElement?.classList.add("modalOpen");
   pHandler.flavorTexts = [];
   //console.log(speciesUrl);
   await pHandler.fetchSpeciesData(speciesUrl);
@@ -183,10 +184,12 @@ async function printModal(
   closeDiv.className = "close_btn";
   closeDiv.textContent = "X";
   closeDiv.addEventListener("click", () => {
-    modalContainer.style.display = "none";
+    modalElement.style.display = "none";
     productsContainer.classList.remove("modalOpen");
+    pagination.classList.remove("modalOpen");
+    productsHeadingElement.classList.remove("modalOpen");
 
-    modalContainer.innerHTML = "";
+    modalElement.innerHTML = "";
   });
 
   //ModalBackground
@@ -223,7 +226,7 @@ async function printModal(
       alert("No more PokeMons on this page.");
       return;
     }
-    modalContainer.innerHTML = "";
+    modalElement.innerHTML = "";
     printModal(
       index - 1,
       pHandler.speciesUrls[index - 1],
@@ -239,7 +242,7 @@ async function printModal(
       alert("No more PokeMons on this page.");
       return;
     }
-    modalContainer.innerHTML = "";
+    modalElement.innerHTML = "";
     printModal(
       index + 1,
       pHandler.speciesUrls[index + 1],
@@ -248,7 +251,7 @@ async function printModal(
     );
   });
 
-  modalContainer.append(modalBackgroundImage);
+  modalElement.append(modalBackgroundImage);
   modalBackgroundImage.append(
     modalDivLeft,
     modalDivRight,
@@ -258,12 +261,16 @@ async function printModal(
   modalDivLeft.append(modalImgDiv);
   modalDivRight.append(modalHeadingDiv, modalTextDiv);
   modalButtonsDiv.append(modalPrevPokeBtn, modalNextPokeBtn);
-  //TODO fix this!
-  /* modalContainer.addEventListener("click", function handler(event: any) {
-    if (event.target.firstChild("modalBackground")) return;
-      modalContainer.style.display = "none";
-    
-  }); */
+
+  //Removes modal on click outside of modalBackground
+  modalElement.addEventListener("click", function handler(event: any) {
+    if (event.target.closest(".modalBackground") != null) return;
+    modalElement.style.display = "none";
+    productsContainer.classList.remove("modalOpen");
+    pagination.classList.remove("modalOpen");
+    productsHeadingElement.classList.remove("modalOpen");
+    this.removeEventListener("click", handler);
+  });
 }
 function printPagination(url: any) {
   const startPosition = 41;
