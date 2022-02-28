@@ -7,13 +7,15 @@ const pagination: HTMLElement | any = document.getElementById("pagination");
 const productsContainer: HTMLElement | any =
   document.getElementById("Products");
 const modalContainer: HTMLElement | any = document.getElementById("Modal");
-const productsTextElement = document.querySelector(".productsText");
+//const productsTextElement = document.querySelector(".productsText");
+const popupCart: HTMLElement | any = document.getElementById("PopupCart");
 
 onLoad();
 
 function onLoad() {
   printHeader();
   printPokemonCards(pHandler.pokeUrl.href);
+  popupCart.style.display = "none";
 
   const productText = document.createElement("div");
   productText.className = "productsText";
@@ -44,7 +46,7 @@ function printHeader() {
 
   const searchInput = document.createElement("input");
   searchInput.setAttribute("type", "search");
-  searchInput.setAttribute("placeholder", "Search Pokemon name or pokedex id.");
+  searchInput.setAttribute("placeholder", "Search Pokémon name or pokedex id.");
   searchInput.className = "searchInput";
   searchInput.addEventListener("keyup", (e) => {
     if (e.keyCode === 13) {
@@ -127,7 +129,9 @@ async function printPokemonCards(url: any) {
             <button class="info_btn" id="info_btn${pokemonid}">
               More info
             </button>
-            <button id="cart_btn${pokemonid}">Add to cart</button>
+            <button class="cart_btn" id="cart_btn${pokemonid}">
+              Add to cart
+            </button>
           </div>
         </div>
       </div>`;
@@ -140,6 +144,7 @@ async function printPokemonCards(url: any) {
 
   printPagination(url);
   AddEventInfoButton();
+  AddEventAddToCartButton();
 }
 
 function AddEventInfoButton() {
@@ -148,7 +153,6 @@ function AddEventInfoButton() {
   allInfoButtons.forEach((infoBtn, index) => {
     infoBtn.addEventListener("click", () => {
       modalContainer.style.display = "block";
-      console.log(index);
       printModal(
         index,
         pHandler.speciesUrls[index],
@@ -158,6 +162,8 @@ function AddEventInfoButton() {
     });
   });
 }
+
+
 
 async function printModal(
   index: any,
@@ -330,3 +336,35 @@ function printPagination(url: any) {
     btnLastPage
   );
 }
+function AddEventAddToCartButton() {
+  const allAddToCartButtons = document.querySelectorAll(".cart_btn");
+
+  allAddToCartButtons.forEach((cartBtn, index) => {
+    cartBtn.addEventListener("click", () => {
+      popupCart.style.display = "block";
+      pHandler.cartItems.push({
+        pokeName: pHandler.pokemonObj[index].name,
+        price: "199",
+      });
+      printPopupCart();
+    });
+  });
+}
+function printPopupCart() {
+  let totalPriceCart: any = 0;
+  popupCart.innerHTML = `<h2>Your PokéShop Cart</h2>
+                      <h3>Added to Cart:</h3>`;
+  console.log(pHandler.cartItems);
+  for (let cartItem of pHandler.cartItems) {
+    popupCart.innerHTML += `<div>
+      <div><p>${cartItem.pokeName.toUpperCase()}</p></div>
+      <div><p>${cartItem.price} SEK </p></div>
+    </div>
+  `;
+    totalPriceCart += parseInt(cartItem.price);
+  }
+  popupCart.innerHTML += `<div>
+<div><p><b>Total Sum:</p></div>
+<div><p>${parseInt(totalPriceCart)} SEK</b></p></div>`;
+}
+

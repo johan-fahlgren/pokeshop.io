@@ -2,6 +2,7 @@ export class pokeHandler {
   pokemonObj: any[];
   speciesUrls: any[];
   flavorTexts: any[];
+  cartItems:any[];
   pokeUrl: URL;
   lastPageUrl: string;
   offsetUrl: string;
@@ -35,6 +36,7 @@ export class pokeHandler {
     this.pokemonObj = [];
     this.flavorTexts = [];
     this.speciesUrls = [];
+    this.cartItems=[]; 
     this.lastPageUrl="https://pokeapi.co/api/v2/pokemon?offset=886&limit=12";
     this.offsetUrl="https://pokeapi.co/api/v2/pokemon?offset=898&limit=12";
     
