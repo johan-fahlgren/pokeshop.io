@@ -48,6 +48,13 @@ body {
   padding-left: 130px;
 }
 
+.searchInputDiv {
+  position: relative;
+  margin-left: 40px;
+  width: 362px;
+  height: 54px;
+}
+
 .searchInput {
   width: 362px;
   height: 54px;
@@ -56,7 +63,6 @@ body {
   background-color: #f1f3f4;
   padding: 20px;
   font-size: 16px;
-  margin-left: 40px;
 }
 
 .submitBtn {
@@ -67,7 +73,9 @@ body {
   border: 0px transparent;
   font-size: 16px;
   position: absolute;
-  left: 62%;
+  margin-top: 2px;
+  right: 3px;
+  z-index: 5;
 
   background-image: url("../images/search.png");
   background-repeat: no-repeat;

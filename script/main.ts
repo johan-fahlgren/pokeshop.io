@@ -44,6 +44,8 @@ function printHeader() {
   audioControls.setAttribute("type", "audio/mpeg");
   audioControls.controls = "controls";
 
+  const searchInputDiv = document.createElement("div");
+  searchInputDiv.className = "searchInputDiv";
   const searchInput = document.createElement("input");
   searchInput.setAttribute("type", "search");
   searchInput.setAttribute("placeholder", "Search Pokémon name or pokedex id.");
@@ -65,7 +67,9 @@ function printHeader() {
   cartBtn.className = "cart_btn";
 
   headerContainer?.append(pageLogo, navContainer);
-  navContainer.append(audioControls, searchInput, submitBtn, cartBtn);
+  navContainer.append(audioControls, searchInputDiv, cartBtn);
+
+  searchInputDiv.append(searchInput, submitBtn);
 }
 
 //TODO Clear input.value after printModal()
@@ -129,7 +133,7 @@ async function printPokemonCards(url: any) {
             <button class="info_btn" id="info_btn${pokemonid}">
               More info
             </button>
-            <button class="cart_btn" id="cart_btn${pokemonid}">
+            <button class="AddToCart_btn" id="cart_btn${pokemonid}">
               Add to cart
             </button>
           </div>
@@ -162,8 +166,6 @@ function AddEventInfoButton() {
     });
   });
 }
-
-
 
 async function printModal(
   index: any,
@@ -337,7 +339,7 @@ function printPagination(url: any) {
   );
 }
 function AddEventAddToCartButton() {
-  const allAddToCartButtons = document.querySelectorAll(".cart_btn");
+  const allAddToCartButtons = document.querySelectorAll(".AddToCart_btn");
 
   allAddToCartButtons.forEach((cartBtn, index) => {
     cartBtn.addEventListener("click", () => {
@@ -367,4 +369,3 @@ function printPopupCart() {
 <div><p><b>Total Sum:</p></div>
 <div><p>${parseInt(totalPriceCart)} SEK</b></p></div>`;
 }
-
