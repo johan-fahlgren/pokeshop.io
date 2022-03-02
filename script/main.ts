@@ -72,7 +72,7 @@ function printHeader() {
   searchInputDiv.append(searchInput, submitBtn);
 }
 
-//TODO Clear input.value after printModal(). 
+//TODO Clear input.value after printModal().
 //TODO Fix .toLower when searching
 async function searchHandler(searchValue: string | number) {
   const offsetNumber: any = await pHandler.searchPokemon(searchValue);
@@ -366,40 +366,37 @@ function printPagination(url: any) {
 function AddEventAddToCartButton() {
   const allAddToCartButtons = document.querySelectorAll(".AddToCart_btn");
 
-  //TODO - Stack same pokemon in cart.
-  //TODO - Show number of items in cart.
   //TODO - LocalStorage implementation?
   allAddToCartButtons.forEach((cartBtn, index) => {
     cartBtn.addEventListener("click", () => {
       popupCart.style.display = "block";
-      console.log(pHandler.pokemonObj[index].name);
-      const newPokemon=pHandler.pokemonObj[index];
+      const newPokemon = JSON.parse(JSON.stringify(pHandler.pokemonObj[index])); //Finns annan lösning?
+      console.log(newPokemon);
 
       if (pHandler.cartItems.length == 0) {
-                        
         pHandler.cartItems.push({
           pokemon: newPokemon,
-          quantity: 1
+          quantity: 1,
         });
         printPopupCart();
       } else {
-        for (let item of pHandler.cartItems) {
-          if (item.pokemon.name.includes(pHandler.pokemonObj[index].name)) {
-            item.quantity += 1;
-            let totalSum: number =
-              parseInt(item.quantity) *
-              parseInt(pHandler.pokemonObj[index].price);
-            item.pokemon.price = totalSum;
-            console.log(pHandler.pokemonObj[index].price);
-          } else {
-            pHandler.cartItems.push({
-              pokemon: pHandler.pokemonObj[index],
-              quantity: 1,
-            });
-          }
-          printPopupCart();
+        let i = pHandler.cartItems.findIndex(
+          (obj) => obj.pokemon.name == newPokemon.name
+        );
+        if (i !== -1) {
+          pHandler.cartItems[i].quantity += 1;
+          let totalSum: number =
+            parseInt(pHandler.cartItems[i].quantity) *
+            parseInt(pHandler.pokemonObj[index].price);
+          pHandler.cartItems[i].pokemon.price = totalSum;
+        } else {
+          pHandler.cartItems.push({
+            pokemon: newPokemon,
+            quantity: 1,
+          });
         }
       }
+      printPopupCart();
     });
   });
 }
@@ -414,7 +411,7 @@ function printPopupCart() {
     console.log(item);
     popupCart.innerHTML += `<div>
       
-      <div><p>${(item.pokemon.name).toUpperCase()}</p></div>
+      <div><p>${item.pokemon.name.toUpperCase()}</p></div>
       <div><p> Qty: ${item.quantity}</p></div>
       <div><p>${item.pokemon.price} SEK </p></div>
     </div>
