@@ -1,9 +1,10 @@
 export class pokeHandler {
   pokemonObj: any[];
-  const pokemonList: any[];
+  pokemonList: any[];
   speciesUrls: any[];
   flavorTexts: any[];
   cartItems: any[];
+  prices: any[];
   pokeUrl: URL;
   lastPageUrl: string;
   offsetUrl: string;
@@ -38,6 +39,7 @@ export class pokeHandler {
     this.flavorTexts = [];
     this.speciesUrls = [];
     this.cartItems = [];
+    this.prices=["99", "129", "159", "179", "199"]
     this.lastPageUrl = "https://pokeapi.co/api/v2/pokemon?offset=886&limit=12";
     this.offsetUrl = "https://pokeapi.co/api/v2/pokemon?offset=898&limit=12";
 
@@ -66,7 +68,7 @@ export class pokeHandler {
     return this.getPokemonData(this.pokemonList);
   }
 
-  //TODO - Add price property to pokemonObj Array.
+  
   async getPokemonData(pokemonList: any[]) {
     for (let pokemon of pokemonList) {
       let pokemonData = await fetch(pokemon.url).then((response) => {
@@ -81,6 +83,7 @@ export class pokeHandler {
         abilities: pokemonData.abilities,
         type: pokemonData.types[0].type.name,
         speciesUrl: pokemonData.species.url,
+        price: this.getPrice(),
       };
       this.pokemonObj.push(newPokemon);
     }
@@ -104,10 +107,12 @@ export class pokeHandler {
   }
 
   async searchPokemon(value: string | number) {
+    
     const onePokeUrl = new URL("https://pokeapi.co");
     onePokeUrl.pathname = `/api/v2/pokemon/${value}`;
 
     if (typeof value !== "number") {
+      
       let pokemonId = await fetch(onePokeUrl.href).then((response) => {
         if (response.ok) {
           return response.json();
@@ -120,4 +125,11 @@ export class pokeHandler {
 
     return `${value - 1}`;
   }
+
+
+getPrice():number{
+return this.prices[Math.floor(Math.random() * this.prices.length)];
+}
+
+
 }
