@@ -98,7 +98,13 @@ async function printPokemonCards(url: any) {
   productsContainer.innerHTML = "";
   pagination.innerHTML = "";
 
-  await pHandler.fetchPokemonURL(url);
+  let result = await pHandler.fetchPokemonURL(url);
+
+  //Handle potential API-fetch problems. 
+  if(result !== undefined){
+    alert("We're experiencing some problems right now. Our programming elves are working night and day to solve the problem. Please try again later!")
+  }
+
   let pokemonid = 0;
 
   await pHandler.pokemonObj.forEach((pokemon) => {

@@ -1,5 +1,6 @@
 export class pokeHandler {
   pokemonObj: any[];
+  const pokemonList: any[];
   speciesUrls: any[];
   flavorTexts: any[];
   cartItems: any[];
@@ -33,6 +34,7 @@ export class pokeHandler {
 
   constructor() {
     this.pokemonObj = [];
+    this.pokemonList=[];
     this.flavorTexts = [];
     this.speciesUrls = [];
     this.cartItems = [];
@@ -46,19 +48,22 @@ export class pokeHandler {
   }
 
   async fetchPokemonURL(pokeUrl: string) {
-    let urlData = await fetch(pokeUrl).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw "Something went wrong, status: " + response.status;
-      }
-    });
-
-    this.getNextPage = urlData.next;
-    this.getPreviousPage = urlData.previous;
-
-    const pokemonList: any[] = urlData.results;
-    return this.getPokemonData(pokemonList);
+    try {
+      let urlData = await fetch(pokeUrl).then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw "Something went wrong, status: " + response.status;
+        }
+      });
+      this.getNextPage = urlData.next;
+      this.getPreviousPage = urlData.previous;
+      this.pokemonList = urlData.results;
+      
+    } catch (error) {
+      return error;
+    }
+    return this.getPokemonData(this.pokemonList);
   }
 
   //TODO - Add price property to pokemonObj Array.
