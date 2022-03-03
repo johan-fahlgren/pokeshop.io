@@ -1,0 +1,63 @@
+for (let pokemon of pHandler.pokemonObj) { 
+
+   
+    
+    const themeColor = pHandler.typeColor[pokemon.type];
+    const productCard = document.createElement("div");
+    productCard.className="cardContainer";
+    productCard.innerHTML=/* HTML */ 
+    `
+    <div class="card"> 
+    <div class="cardHeader">
+    <span>${pokemon.name.toUpperCase()}</span>
+    <span>#${pokemon.id}</span>
+    </div>
+    <div class="cardImage" style="background-color: ${themeColor}">
+    <img src="${pokemon.sprite}">
+    </div>
+
+    <div class="cardBody">
+    <div class="pokeDetails">
+    <span><b>Height:</b> ${pokemon.height}</span>
+    <span><b>Weight:</b> ${pokemon.weight}</span>
+    </div>
+    <div class="pokeDetails2">
+    <div><b>Type:</b> ${pokemon.type.firstLetterUpper()}</div>
+    <div><b>Abilities:</b> ${pokemon.abilities[0].ability.name.firstLetterUpper()}</div> 
+    </div> 
+    <div class="price"><b>199 SEK</b></div>
+    </div>`;
+
+    //Card Container Div
+    const cardButtons = document.createElement("div");
+    cardButtons.className ="cardButtons" 
+    productsContainer?.append(cardButtons);   
+
+    //Info Button Div
+    const info_btn = document.createElement("button");
+    info_btn.textContent = "More info";
+    info_btn.id = "info_btn";   
+    info_btn.addEventListener("click", console.log(`${pokemon.speciesUrl}`);
+    cardButtons.append(info_btn);
+
+    productsContainer?.append(productCard); 
+      
+    
+    
+  }
+
+
+
+
+
+   //Card Container Div
+    const cardButtons = document.createElement("div");
+    cardButtons.className ="cardButtons" 
+    productsContainer?.append(cardButtons);   
+
+    //Info Button Div
+    const info_btn = document.createElement("button");
+    info_btn.textContent = "More info";
+    info_btn.id = "info_btn";   
+    info_btn.addEventListener("click", console.log(`${pokemon.speciesUrl}`);
+    cardButtons.append(info_btn);

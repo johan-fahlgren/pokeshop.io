@@ -1,1 +1,496 @@
-/* No CSS *//*# sourceMappingURL=style.css.map */
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+html {
+  background-color: #cfe6e6;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #e5fbff;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.header {
+  padding: 20px 0px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 1200px;
+  background-color: #b2d4d4;
+}
+
+.header .pageLogo {
+  padding: 20px 0;
+  height: 150px;
+  width: 100%;
+  background-color: #b2d4d4;
+  background-image: url("../images/PokeShop.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.navContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  width: 1200px;
+  padding-top: 20px;
+  border-top: 3px solid #e5fbff;
+}
+
+.audio {
+  padding-left: 130px;
+}
+
+.searchInputDiv {
+  position: relative;
+  margin-left: 40px;
+  width: 362px;
+  height: 54px;
+}
+
+.searchInput {
+  width: 362px;
+  height: 54px;
+  border-radius: 26px;
+  border: 0px transparent;
+  background-color: #f1f3f4;
+  padding: 20px;
+  font-size: 16px;
+}
+
+.submitBtn {
+  width: 50px;
+  height: 50px;
+  background-color: #b2d4d4;
+  border-radius: 26px;
+  border: 0px transparent;
+  font-size: 16px;
+  position: absolute;
+  margin-top: 2px;
+  right: 3px;
+  z-index: 5;
+  cursor: pointer;
+  background-image: url("../images/search.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+}
+
+.submitBtn:hover {
+  background-color: #396bba;
+}
+
+.cart_btn {
+  position: relative;
+  width: 84px;
+  height: 54px;
+  border-radius: 26px;
+  border: 0px transparent;
+  font-size: 16px;
+  margin-left: 140px;
+  background-image: url("../images/cart.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 34%;
+}
+
+.cart_btn:hover {
+  cursor: pointer;
+  background-color: #396bba;
+}
+
+.cartQty {
+  width: 23px;
+  height: 23px;
+}
+
+.style {
+  position: absolute;
+  background-color: gold;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  right: 12px;
+  top: 8px;
+}
+
+.PopupCart {
+  position: absolute;
+  z-index: 2;
+  width: 240px;
+  margin-left: 900px;
+  margin-top: 280px;
+  padding: 10px 30px;
+  border-radius: 5px;
+  background-color: #f1f3f4;
+  -webkit-box-shadow: 5px 5px 10px black;
+          box-shadow: 5px 5px 10px black;
+}
+
+.PopupCart div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+/* MAIN */
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.productsText {
+  padding-top: 40px;
+  width: 1200px;
+  height: 100px;
+  background-image: url("../images/Choose.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 40%;
+}
+
+.Products {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-grid-columns: (auto)[3];
+      grid-template-columns: repeat(3, auto);
+  width: 1200px;
+}
+
+.cardContainer {
+  margin: 20px;
+}
+
+.card {
+  border: 10px solid gold;
+  background-color: #e5e5f7;
+  opacity: 0.8;
+  background-image: repeating-radial-gradient(circle at 0 0, transparent 0, #fff27c 10px), repeating-linear-gradient(#e6c302, rgba(255, 230, 0, 0.616));
+  border-radius: 5px;
+  width: 250px;
+  height: 400px;
+  padding: 0 10px;
+  -webkit-box-shadow: 5px 5px 10px black;
+          box-shadow: 5px 5px 10px black;
+}
+
+.cardHeader {
+  font-weight: bold;
+}
+
+.cardHeader,
+.pokeDetails {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.cardHeader span,
+.pokeDetails span {
+  padding: 2px 10px;
+}
+
+.cardBody {
+  height: 120px;
+}
+
+.pokeDetails {
+  background-color: gold;
+  -webkit-box-shadow: 3px 3px 3px gray;
+          box-shadow: 3px 3px 3px gray;
+}
+
+.pokeDetails2 {
+  margin-top: 10px;
+  background-color: gold;
+  -webkit-box-shadow: 3px 3px 3px gray;
+          box-shadow: 3px 3px 3px gray;
+  padding: 2px 10px;
+}
+
+.price {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.cardImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: red;
+  -webkit-box-shadow: 3px 3px 3px gray;
+          box-shadow: 3px 3px 3px gray;
+  border: 5px ridge silver;
+  margin-bottom: 10px;
+}
+
+.cardImage .circle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 20px 0px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.cardImage img {
+  width: 180px;
+}
+
+.cardButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+  gap: 20px;
+}
+
+.cardButtons button {
+  font-weight: bold;
+  color: black;
+  background-color: gold;
+  border: 2px solid black;
+}
+
+.cardButtons button:hover {
+  cursor: pointer;
+  color: gold;
+  background-color: black;
+}
+
+.Modal {
+  border: 1px solid black;
+  position: absolute;
+  top: 306px;
+  margin: auto;
+  display: none;
+  width: 1200px;
+  height: 2100px;
+}
+
+.modalBackground {
+  position: fixed;
+  width: 600px;
+  height: 450px;
+  top: 50%;
+  left: 50%;
+  margin-left: -300px;
+  /* Negative half of width. */
+  margin-top: -200px;
+  /* Negative half of height. */
+  background-image: url("../images/pokedex.png");
+  background-size: cover;
+}
+
+.close_btn {
+  position: fixed;
+  font-size: 40px;
+  font-weight: bold;
+  color: #fb0505;
+  padding: 0px 10px;
+  margin-top: 11px;
+  margin-left: 19px;
+  text-shadow: 1px 1px 2px black;
+}
+
+.close_btn:hover {
+  cursor: pointer;
+  color: #9b0505;
+}
+
+.modalDivLeft,
+.modalDivRight,
+.modalButtonsDiv {
+  z-index: 1;
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modalDivLeft,
+.modalDivRight {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 220px;
+  height: 270px;
+}
+
+.modalDivLeft {
+  margin-left: 36px;
+  margin-top: 120px;
+}
+
+.modalDivLeft img {
+  width: 240px;
+}
+
+.modalDivRight {
+  text-align: center;
+  margin-left: 351px;
+  margin-top: 115px;
+}
+
+.modalHeading {
+  max-width: 250px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #fb0505;
+  margin: 20px 0px;
+}
+
+.modalText {
+  font-size: 18px;
+  padding: 0 15px;
+  max-width: 220px;
+}
+
+.modalButtonsDiv {
+  position: fixed;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 100px;
+  margin-left: 86px;
+  margin-top: 374px;
+}
+
+.modalButtonsDiv button {
+  -webkit-box-shadow: 2px 2px 3px black;
+          box-shadow: 2px 2px 3px black;
+  cursor: pointer;
+}
+
+.modalOpen {
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+}
+
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 30px 0;
+}
+
+.pagination button {
+  margin: 10px;
+  padding: 5px;
+  width: 120px;
+  font-size: larger;
+  border-radius: 5px;
+  border: 3px solid gold;
+  background-color: #fff27c;
+  color: grey;
+}
+
+.btnActive {
+  color: black !important;
+}
+
+.btnActive:hover {
+  background-color: gold;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btnCurrent {
+  max-width: 50px;
+  margin: 10px;
+  padding: 5px;
+  font-size: larger;
+  border-radius: 5px;
+  background-color: gold;
+  font-weight: bold;
+  color: black !important;
+}
+
+footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #b2d4d4;
+  height: 150px;
+}
+
+footer p {
+  color: white;
+  font-weight: bold;
+}
+/*# sourceMappingURL=style.css.map */
