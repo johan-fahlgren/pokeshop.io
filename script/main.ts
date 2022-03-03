@@ -61,10 +61,18 @@ function printHeader() {
     searchHandler(searchInput.value);
   });
 
-  //TODO - Add on click event
-  //Cart Button
+  
   const cartBtn = document.createElement("button");
   cartBtn.className = "cart_btn";
+  cartBtn.addEventListener("click", ()=>{
+    if(popupCart.style.display != "block"){
+      printPopupCart();
+    }else{
+      popupCart.style.display="none";
+    }
+    
+  });
+
 
   headerContainer?.append(pageLogo, navContainer);
   navContainer.append(audioControls, searchInputDiv, cartBtn);
@@ -206,7 +214,7 @@ async function printModal(
   //ModalBackground
   const modalBackgroundImage = document.createElement("div");
   modalBackgroundImage.className = "modalBackground";
-  //modalBackgroundImage.src = "../images/pokedex.png";
+  
 
   //Left Modal Div
   const modalDivLeft = document.createElement("div");
@@ -226,7 +234,8 @@ async function printModal(
   const modalTextDiv = document.createElement("div");
   modalTextDiv.className = "modalText";
   modalTextDiv.innerText = pHandler.flavorTexts[0];
-
+  
+  //Buttons to walk to previous and next pokemon in Pokedex
   const modalButtonsDiv = document.createElement("div");
   modalButtonsDiv.className = "modalButtonsDiv";
 
@@ -369,7 +378,7 @@ function AddEventAddToCartButton() {
   //TODO - LocalStorage implementation?
   allAddToCartButtons.forEach((cartBtn, index) => {
     cartBtn.addEventListener("click", () => {
-      popupCart.style.display = "block";
+      
       const newPokemon = JSON.parse(JSON.stringify(pHandler.pokemonObj[index])); //Finns annan lösning?
       console.log(newPokemon);
 
@@ -403,6 +412,7 @@ function AddEventAddToCartButton() {
 
 //TODO - Show total number of  same item.
 function printPopupCart() {
+  popupCart.style.display = "block";
   let totalPriceCart: any = 0;
   popupCart.innerHTML = `<h2>Your PokéShop Cart</h2>
                       <h3>Added to Cart:</h3>`;

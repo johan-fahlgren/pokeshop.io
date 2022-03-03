@@ -114,6 +114,12 @@ body {
   background-size: 34%;
 }
 
+.cart_btn:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 5px 5px 10px black;
+          box-shadow: 5px 5px 10px black;
+}
+
 .PopupCart {
   position: absolute;
   z-index: 2;

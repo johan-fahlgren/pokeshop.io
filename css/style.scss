@@ -94,6 +94,10 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 34%;
+  &:hover {
+    cursor: pointer;
+    box-shadow: 5px 5px 10px black;
+  }
 }
 
 .PopupCart {
