@@ -3,8 +3,8 @@ interface Pokemon {
   name: string;
   height: number;
   weight: number;
-  sprite: URL;
-  abilities: string;
+  sprite: string;
+  abilities: [];
   type: string;
   speciesUrl: URL;
   price: number;
@@ -12,7 +12,7 @@ interface Pokemon {
 
 export class pokeHandler {
   pokemonObj: Pokemon[];
-  pokemonList: any[];
+  pokemonList: URL[];
   speciesUrls: any[];
   flavorTexts: any[];
   cartItems: any[];
@@ -61,9 +61,10 @@ export class pokeHandler {
     this.pokeUrl.searchParams.set("limit", "12");
   }
 
-  async fetchPokemonURL(pokeUrl: URL) {
+  // Fetches a list with Pokemon URLs, and saves next and previous offset URLs.
+  async fetchPokemonURL(pokeAPIUrl: string) {
     try {
-      let urlData = await fetch(pokeUrl).then((response) => {
+      let urlData = await fetch(pokeAPIUrl).then((response) => {
         if (response.ok) {
           return response.json();
         } else {
@@ -79,7 +80,7 @@ export class pokeHandler {
     return this.getPokemonData(this.pokemonList);
   }
 
-  //TODO pokemon Interface:
+  // Iterates trough PokemonURLs and creates new pokemon objects.
   async getPokemonData(pokemonList: any[]) {
     for (let pokemon of pokemonList) {
       let pokemonData = await fetch(pokemon.url).then((response) => {
@@ -99,7 +100,7 @@ export class pokeHandler {
       this.pokemonObj.push(newPokemon);
     }
   }
-
+  // Fetches pokemon descriptions and iterates to get only english desc.
   async fetchSpeciesData(speciesUrl: any) {
     let speciesData = await fetch(speciesUrl).then((response) => {
       if (response.ok) {
@@ -117,11 +118,12 @@ export class pokeHandler {
     });
   }
 
-  async searchPokemon(value: string | number) {
-    const onePokeUrl = new URL("https://pokeapi.co");
-    onePokeUrl.pathname = `/api/v2/pokemon/${value}`;
-
+  // Returns pokemonId if user searches with name or number
+  async getPokemonId(value: number | string) {
     if (typeof value !== "number") {
+      const onePokeUrl = new URL("https://pokeapi.co");
+      onePokeUrl.pathname = `/api/v2/pokemon/${value.toLowerCase()}`;
+
       let pokemonId = await fetch(onePokeUrl.href).then((response) => {
         if (response.ok) {
           return response.json();
@@ -135,7 +137,21 @@ export class pokeHandler {
     return `${value - 1}`;
   }
 
+  // Dummy function to set random price on pokemons.
   getPrice(): number {
-    return this.prices[Math.floor(Math.random() * this.prices.length)];
+    return parseInt(
+      this.prices[Math.floor(Math.random() * this.prices.length)]
+    );
+  }
+
+  // Updates shopping cart button with current quantity.
+  totalCartQty() {
+    let totalQty: Number = 0;
+
+    for (let item of this.cartItems) {
+      totalQty += item.quantity;
+    }
+
+    return totalQty;
   }
 }

@@ -11,6 +11,7 @@ const popupCart: HTMLElement | any = document.getElementById("PopupCart");
 
 onLoad();
 
+// initialize PokeShop function.
 function onLoad() {
   printHeader();
   printPokemonCards(pHandler.pokeUrl.href);
@@ -19,15 +20,16 @@ function onLoad() {
   const productText = document.createElement("div");
   productText.className = "productsText";
   mainElement?.prepend(productText);
+
+  window.addEventListener("DOMContentLoaded", (event) => {
+    const audio: any = document.querySelector("audio");
+    audio.volume = 0.1;
+    audio.play();
+    audio.loop = true;
+  });
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
-  const audio: any = document.querySelector("audio");
-  audio.volume = 0.1;
-  //audio.play();
-  audio.loop = true;
-});
-
+//Creates DOM-elements in header
 function printHeader() {
   const headerContainer = document.getElementById("Header");
 
@@ -80,10 +82,10 @@ function printHeader() {
   searchInputDiv.append(searchInput, submitBtn);
 }
 
+//Takes searchValue and calls for printPokemonCards() and printModal()
 //TODO Clear input.value after printModal().
-//TODO Fix .toLower when searching
 async function searchHandler(searchValue: string | number) {
-  const offsetNumber: any = await pHandler.searchPokemon(searchValue);
+  const offsetNumber: number = await pHandler.getPokemonId(searchValue);
 
   if (offsetNumber === "NaN") {
     alert("The pokemon you are searching for doesn't exists. Try again!");
@@ -100,8 +102,10 @@ async function searchHandler(searchValue: string | number) {
     pHandler.pokemonObj[0].name
   );
 }
+
 //TODO - Fix missing abilities.
-async function printPokemonCards(url: any) {
+//Creates DOM-elements for pokemon/product cards
+async function printPokemonCards(url: string) {
   pHandler.pokemonObj = [];
   pHandler.speciesUrls = [];
   productsContainer.innerHTML = "";
@@ -168,6 +172,7 @@ async function printPokemonCards(url: any) {
   AddEventAddToCartButton();
 }
 
+// Adds Click EventListeners to all "More info" buttons.
 function AddEventInfoButton() {
   const allInfoButtons = document.querySelectorAll(".info_btn");
 
@@ -184,6 +189,7 @@ function AddEventInfoButton() {
   });
 }
 
+// Creates DOM-element for popup modal (More Info button).
 async function printModal(
   index: any,
   speciesUrl: any,
@@ -207,7 +213,6 @@ async function printModal(
     productsContainer.classList.remove("modalOpen");
     pagination.classList.remove("modalOpen");
     productsHeadingElement.classList.remove("modalOpen");
-
     modalElement.innerHTML = "";
   });
 
@@ -294,6 +299,8 @@ async function printModal(
     }
   );
 }
+
+// Creates pagination DOM
 function printPagination(url: any) {
   const startPosition = 41;
   const endPosition = url.search("&");
@@ -371,23 +378,24 @@ function printPagination(url: any) {
     btnLastPage
   );
 }
+
+// Adds click EventListeners to "Add to cart" button
 function AddEventAddToCartButton() {
-  const allAddToCartButtons: HTMLElement =
+  const allAddToCartButtons: NodeList =
     document.querySelectorAll(".AddToCart_btn");
-  const cartQty: HTMLElement = document.querySelector(".cartQty");
+  const cartQty: HTMLElement | null = document.querySelector(".cartQty");
 
   //TODO - LocalStorage implementation?
   allAddToCartButtons.forEach((cartBtn, index) => {
     cartBtn.addEventListener("click", () => {
       const newPokemon = pHandler.pokemonObj[index].deepCopy();
-      console.log(newPokemon);
 
       if (pHandler.cartItems.length == 0) {
         pHandler.cartItems.push({
           pokemon: newPokemon,
           quantity: 1,
         });
-        cartQty.innerHTML = `${totalCartQty()}`;
+        cartQty.innerHTML = `${pHandler.totalCartQty()}`;
         cartQty.classList.add("style");
         printPopupCart();
       } else {
@@ -400,13 +408,13 @@ function AddEventAddToCartButton() {
             parseInt(pHandler.cartItems[i].quantity) *
             parseInt(pHandler.pokemonObj[index].price);
           pHandler.cartItems[i].pokemon.price = totalSum;
-          cartQty.innerHTML = `${totalCartQty()}`;
+          cartQty.innerHTML = `${pHandler.totalCartQty()}`;
         } else {
           pHandler.cartItems.push({
             pokemon: newPokemon,
             quantity: 1,
           });
-          cartQty.innerHTML = `${totalCartQty()}`;
+          cartQty.innerHTML = `${pHandler.totalCartQty()}`;
         }
       }
       printPopupCart();
@@ -415,6 +423,7 @@ function AddEventAddToCartButton() {
 }
 
 //TODO - Show total number of  same item.
+// Creates cart modal DOM element
 function printPopupCart() {
   popupCart.style.display = "block";
   let totalPriceCart: any = 0;
@@ -422,7 +431,6 @@ function printPopupCart() {
                       <h3>Added to Cart:</h3>`;
 
   for (let item of pHandler.cartItems) {
-    console.log(item);
     popupCart.innerHTML += `<div>
       
       <div><p>${item.pokemon.name.toUpperCase()}</p></div>
@@ -435,14 +443,4 @@ function printPopupCart() {
   popupCart.innerHTML += `<div>
 <div><p><b>Total Sum:</p></div>
 <div><p>${parseInt(totalPriceCart)} SEK</b></p></div>`;
-}
-
-function totalCartQty() {
-  let totalQty: Number = 0;
-
-  for (let item of pHandler.cartItems) {
-    totalQty += item.quantity;
-  }
-
-  return totalQty;
 }
