@@ -1,5 +1,17 @@
+interface Pokemon {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  sprite: URL;
+  abilities: string;
+  type: string;
+  speciesUrl: URL;
+  price: number;
+}
+
 export class pokeHandler {
-  pokemonObj: any[];
+  pokemonObj: Pokemon[];
   pokemonList: any[];
   speciesUrls: any[];
   flavorTexts: any[];
@@ -49,7 +61,7 @@ export class pokeHandler {
     this.pokeUrl.searchParams.set("limit", "12");
   }
 
-  async fetchPokemonURL(pokeUrl: string) {
+  async fetchPokemonURL(pokeUrl: URL) {
     try {
       let urlData = await fetch(pokeUrl).then((response) => {
         if (response.ok) {
@@ -73,7 +85,7 @@ export class pokeHandler {
       let pokemonData = await fetch(pokemon.url).then((response) => {
         return response.json();
       });
-      const newPokemon = {
+      const newPokemon: Pokemon = {
         id: pokemonData.id,
         name: pokemonData.name,
         height: pokemonData.height,
