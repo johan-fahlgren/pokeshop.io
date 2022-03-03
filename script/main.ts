@@ -61,22 +61,22 @@ function printHeader() {
     searchHandler(searchInput.value);
   });
 
-  
   const cartBtn = document.createElement("button");
   cartBtn.className = "cart_btn";
-  cartBtn.addEventListener("click", ()=>{
-    if(popupCart.style.display != "block"){
+  cartBtn.addEventListener("click", () => {
+    if (popupCart.style.display != "block") {
       printPopupCart();
-    }else{
-      popupCart.style.display="none";
+    } else {
+      popupCart.style.display = "none";
     }
-    
   });
 
+  const cartQty = document.createElement("div");
+  cartQty.className = "cartQty";
 
   headerContainer?.append(pageLogo, navContainer);
   navContainer.append(audioControls, searchInputDiv, cartBtn);
-
+  cartBtn.append(cartQty);
   searchInputDiv.append(searchInput, submitBtn);
 }
 
@@ -214,7 +214,6 @@ async function printModal(
   //ModalBackground
   const modalBackgroundImage = document.createElement("div");
   modalBackgroundImage.className = "modalBackground";
-  
 
   //Left Modal Div
   const modalDivLeft = document.createElement("div");
@@ -234,7 +233,7 @@ async function printModal(
   const modalTextDiv = document.createElement("div");
   modalTextDiv.className = "modalText";
   modalTextDiv.innerText = pHandler.flavorTexts[0];
-  
+
   //Buttons to walk to previous and next pokemon in Pokedex
   const modalButtonsDiv = document.createElement("div");
   modalButtonsDiv.className = "modalButtonsDiv";
@@ -373,13 +372,14 @@ function printPagination(url: any) {
   );
 }
 function AddEventAddToCartButton() {
-  const allAddToCartButtons = document.querySelectorAll(".AddToCart_btn");
+  const allAddToCartButtons: HTMLElement =
+    document.querySelectorAll(".AddToCart_btn");
+  const cartQty: HTMLElement = document.querySelector(".cartQty");
 
   //TODO - LocalStorage implementation?
   allAddToCartButtons.forEach((cartBtn, index) => {
     cartBtn.addEventListener("click", () => {
-      
-      const newPokemon = JSON.parse(JSON.stringify(pHandler.pokemonObj[index])); //Finns annan lösning?
+      const newPokemon = pHandler.pokemonObj[index].deepCopy();
       console.log(newPokemon);
 
       if (pHandler.cartItems.length == 0) {
@@ -387,6 +387,8 @@ function AddEventAddToCartButton() {
           pokemon: newPokemon,
           quantity: 1,
         });
+        cartQty.innerHTML = `${totalCartQty()}`;
+        cartQty.classList.add("style");
         printPopupCart();
       } else {
         let i = pHandler.cartItems.findIndex(
@@ -398,11 +400,13 @@ function AddEventAddToCartButton() {
             parseInt(pHandler.cartItems[i].quantity) *
             parseInt(pHandler.pokemonObj[index].price);
           pHandler.cartItems[i].pokemon.price = totalSum;
+          cartQty.innerHTML = `${totalCartQty()}`;
         } else {
           pHandler.cartItems.push({
             pokemon: newPokemon,
             quantity: 1,
           });
+          cartQty.innerHTML = `${totalCartQty()}`;
         }
       }
       printPopupCart();
@@ -431,4 +435,14 @@ function printPopupCart() {
   popupCart.innerHTML += `<div>
 <div><p><b>Total Sum:</p></div>
 <div><p>${parseInt(totalPriceCart)} SEK</b></p></div>`;
+}
+
+function totalCartQty() {
+  let totalQty: Number = 0;
+
+  for (let item of pHandler.cartItems) {
+    totalQty += item.quantity;
+  }
+
+  return totalQty;
 }

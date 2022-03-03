@@ -76,14 +76,20 @@ body {
   margin-top: 2px;
   right: 3px;
   z-index: 5;
+  cursor: pointer;
 
   background-image: url("../images/search.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 50%;
+
+  &:hover {
+    background-color: #396bba;
+  }
 }
 
 .cart_btn {
+  position: relative;
   width: 84px;
   height: 54px;
   border-radius: 26px;
@@ -93,11 +99,26 @@ body {
   background-image: url("../images/cart.png");
   background-repeat: no-repeat;
   background-position: center;
+
   background-size: 34%;
   &:hover {
     cursor: pointer;
-    box-shadow: 5px 5px 10px black;
+    background-color: #396bba;
   }
+}
+
+.cartQty {
+  width: 23px;
+  height: 23px;
+}
+.style {
+  position: absolute;
+  background-color: gold;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  right: 12px;
+  top: 8px;
 }
 
 .PopupCart {
