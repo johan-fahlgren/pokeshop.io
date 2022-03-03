@@ -3,8 +3,6 @@
 _PokéShop, februari-mars 2022_<br>
 _Pia Hagman och Johan Fahlgren_
 
-<!-- [issue #13 - #16](https://github.com/PiaHagman/csharp-projektarbete/projects/1) -->
-
 ## Planering
 
 Planeringen av vårt projekt gick smidigt. Jag och Johan känner varandra och har jobbat mycket tillsammans tidigare varför vi vet ungefär hur den andre jobbar. Vi ville båda göra en PokéShop genom PokeAPI:n och beslöt oss för att jobba på i början på projektet för att sedan ha tid kvar i slutet för bonusfunktioner. Vi ville båda testa TypeScript och jobba med minst två filer, en för glue-kod och en för logik. Vår design ville vi skulle likna Pokémon-kort. Om tid fanns ville vi även i detta projekt implementera localStorage för att kunna spara en påfylld kundvagn mellan sessioner.
@@ -31,7 +29,7 @@ Generellt känner jag att vi har en bra riktning i vårt program och vi har inte
 
 En sak jag tänkt på ar att vi skulle behöva använda id- klass- och varibelnamn mer konsekvent och strukturerat. Kanske borde en redan i planeringsfasen bestämma sig för formen på de olika så att en inte behöver scrolla fram och tillbaka i sin egen kod för att dubbelkolla vad de olika delarna namngetts till. En liten detalj, men det känns som att det blir viktigare och viktigare ju större programmen blir.
 
-Utöver ovan har vi en del TODO's i programmet som vi gärna skulle jobba vidare på.
+Utöver ovan har vi en del TODO's i programmet som vi gärna skulle jobba vidare på. Vi hann tyvärr heller inte implementera LocalStorage för vår kassa.
 
 ## Beskrivning av tidsförloppen vid en fetch
 
