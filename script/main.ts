@@ -1,3 +1,4 @@
+
 import { pokeHandler } from "./logic.js";
 import "./util.js";
 
@@ -54,6 +55,7 @@ function printHeader() {
   searchInput.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
       searchHandler(searchInput.value);
+
     }
   });
 
